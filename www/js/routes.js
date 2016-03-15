@@ -32,7 +32,11 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab2': {
         templateUrl: 'templates/eventFeed.html',
         controller: 'eventFeedCtrl'
+<<<<<<< HEAD
       }
+=======
+      },
+>>>>>>> 3fb41d9526dd8d5f7ff0316506bfdd901b4a750b
     }
   })
 
