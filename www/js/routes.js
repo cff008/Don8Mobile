@@ -46,17 +46,17 @@ angular.module('app.routes', ['ionicUIRouter'])
         templateUrl: 'templates/eventFeed.html',
         controller: 'eventFeedCtrl'
       },
-      'tab3': {
-        templateUrl: 'templates/eventFeed.html',
-        controller: 'eventFeedCtrl'
-      }
     }
   })
 
-  .state('myEvents', {
+  .state('tabsController.myEvents', {
     url: '/MyEvents',
-    templateUrl: 'templates/myEvents.html',
-    controller: 'myEventsCtrl'
+    views: {
+      'tab3': {
+        templateUrl: 'templates/myEvents.html',
+        controller: 'myEventsCtrl'
+      }
+    }
   })
 
   .state('tabsController.settings', {
