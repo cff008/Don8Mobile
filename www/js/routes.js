@@ -26,39 +26,25 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.eventFeed'
-      2) Using $state.go programatically:
-        $state.go('tabsController.eventFeed');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab2/EventFeed
-      /page1/tab3/EventFeed
-  */
   .state('tabsController.eventFeed', {
     url: '/EventFeed',
     views: {
       'tab2': {
         templateUrl: 'templates/eventFeed.html',
         controller: 'eventFeedCtrl'
-      },
-      'tab3': {
-        templateUrl: 'templates/eventFeed.html',
-        controller: 'eventFeedCtrl'
       }
     }
   })
 
-  .state('myEvents', {
+  .state('tabsController.myEvents', {
     url: '/MyEvents',
-    templateUrl: 'templates/myEvents.html',
-    controller: 'myEventsCtrl'
+    views: {
+      'tab3': {
+        templateUrl: 'templates/myEvents.html',
+        controller: 'myEventsCtrl'
+      }
+    }
   })
-
   .state('tabsController.settings', {
     url: '/Settings',
     views: {
@@ -81,10 +67,14 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'signupCtrl'
   })
 
-  .state('editProfile', {
-    url: '/EditProfile',
-    templateUrl: 'templates/editProfile.html',
-    controller: 'editProfileCtrl'
+  .state('tabsController.editProfile', {
+    url: '/page6',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/editProfile.html',
+        controller: 'editProfileCtrl'
+      }
+    }
   })
 
 $urlRouterProvider.otherwise('/page9')
