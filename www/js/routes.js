@@ -6,11 +6,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $stateProvider
-    
-  
-
-      .state('tabsController', {
+  $stateProvider.state('tabsController', {
     url: '/page1',
     templateUrl: 'templates/tabsController.html',
     abstract:true
@@ -39,14 +35,35 @@ angular.module('app.routes', ['ionicUIRouter'])
       /page1/tab2/EventFeed
       /page1/tab3/EventFeed
   */
-  .state('tabsController.eventFeed', {
+  $stateProvider.state('tabsController.eventFeed', {
     url: '/EventFeed',
     views: {
       'tab2': {
         templateUrl: 'templates/eventFeed.html',
         controller: 'eventFeedCtrl'
-      },
+      }
     }
+  })
+  
+  .state('tabsController.detail', {
+    url: '/Detail/:id',
+	views: {
+	'tab2':{
+    templateUrl: 'templates/detail.html',
+    controller: 'detailCtrl'
+	}
+	}
+    
+  })
+  
+  .state('tabsController.results', {
+	url: '/Results',
+	views:{
+	'tab2':{
+	templateUrl: 'templates/results.html',
+	controller: 'resultCtrl'
+	}
+	}
   })
 
   .state('tabsController.myEvents', {
@@ -58,6 +75,9 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+  
+  
+	
 
   .state('tabsController.settings', {
     url: '/Settings',
