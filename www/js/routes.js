@@ -22,6 +22,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
+
   /* 
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
@@ -43,7 +44,7 @@ angular.module('app.routes', ['ionicUIRouter'])
         controller: 'eventFeedCtrl'
       }
     }
-  })
+      })
   
   .state('tabsController.detail', {
     url: '/Detail/:id',
@@ -75,9 +76,11 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+
   
   
 	
+
 
   .state('tabsController.settings', {
     url: '/Settings',
@@ -101,10 +104,14 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'signupCtrl'
   })
 
-  .state('editProfile', {
-    url: '/EditProfile',
-    templateUrl: 'templates/editProfile.html',
-    controller: 'editProfileCtrl'
+  .state('tabsController.editProfile', {
+    url: '/page6',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/editProfile.html',
+        controller: 'editProfileCtrl'
+      }
+    }
   })
 
 $urlRouterProvider.otherwise('/page9')
