@@ -1,6 +1,6 @@
 <ion-view>
   <ion-nav-title>Don8 <i class="icon ion-ios-location"></i></ion-nav-title>
-  <ion-content padding="true">
+  <ion-content padding="true"style="background: url(img/background.jpg) no-repeat center;" >
     <br>
     <form name="form.search" ng-submit="form.search.$valid && goToList()">
       <label class="item item-input">
@@ -30,10 +30,10 @@
     </form>
     <br>
     <br>
-    <h3>Volunteer Opportunities</h3>
+    <h3><font color="white">Volunteer Opportunities</h3>
 	
     <ion-list>
-      <ion-item class="item-icon-right item-avatar item-royal" ui-sref="tabsController.detail({id: event.id})" collection-repeat="event in events track by event.id | limitTo:limit">
+      <ion-item class="item-icon-right item-avatar item-stable" ui-sref="tabsController.detail({id: event.id})" collection-repeat="event in events track by event.id | limitTo:limit">
         <img ng-src="{{event.thumb}}">
         <h2 class="positive">{{event.name}}</h2>
         <p>
@@ -42,7 +42,7 @@
         </p>
         <i class="icon ion-ios-arrow-right"></i>
       </ion-item>
-      <ion-item class="text-center item-royal" ng-if="events && !events.length">No events found :(</ion-item>
+      <ion-item class="text-center item-stable" ng-if="events && !events.length">No events found :(</ion-item>
     </ion-list>
     <ion-infinite-scroll
       
