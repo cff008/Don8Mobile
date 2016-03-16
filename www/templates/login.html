@@ -2,17 +2,24 @@
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <form class="list">
             <ion-list>
+
+                <div class="item item-image">
+                    <img src="/img/don8-logo.png">
+                </div>
+
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" ng-model="data.username">
                 </label>
+                
                 <label class="item item-input">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="">
+                    <input type="password" placeholder="" ng-model="data.password">
                 </label>
+
             </ion-list>
             <div class="spacer" style="height: 40px;"></div>
-            <a ui-sref="tabsController.myProfile" id="login-button1" class="button button-stable  button-block">Log in</a>
+            <button id="login-button1" class="button button-stable  button-block" ng-click="login()">Log in</button>
             <a ui-sref="signup" id="login-button2" class="button button-positive  button-block button-clear">Or create an account</a>
         </form>
     </ion-content>
