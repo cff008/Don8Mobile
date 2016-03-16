@@ -50,7 +50,7 @@ angular.module('app.controllers', [])
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
-                template: 'Please check your credentials!'
+                template: 'Please check your credentials! Username: user\nPassword: secret'
             });
         });
     }
