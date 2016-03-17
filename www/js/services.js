@@ -37,7 +37,7 @@ angular.module('app.services', [])
     '$timeout',
     'dataService',
     function ($q, $timeout, dataService) {
-
+		
       function check(currentEvent, satTrans, wheelChair, wheelChairLift) {
         if (satTrans && wheelChair && wheelChairLift) {
           if (!currentEvent.satTrans || !currentEvent.wheelChair || !currentEvent.wheelChairLift) {
@@ -73,7 +73,7 @@ angular.module('app.services', [])
             founds = [],
             currentEvent,
             i = 0;
-
+		
         for (i; i < events.length; i = i + 1) {
           currentEvent = events[i];
           if (currentEvent.name && currentEvent.name.indexOf(searchString) !== -1 || currentEvent.city && currentEvent.city.indexOf(searchString) !== -1 || currentEvent.district && currentEvent.district.indexOf(searchString) !== -1   || currentEvent.organization && currentEvent.organization.indexOf(searchString) !== -1){
@@ -92,22 +92,20 @@ angular.module('app.services', [])
         return deferred.promise;
       };
 
-      this.getNext = function () {
+      this.getNext = function (index) {
         var deferred = $q.defer(),
             events = [],
-            i = 0;
+            i = index;
 
         for (i; i < dataService.events.length; i = i + 1) {
-          if (i === 5) {
-            break;
-          }
+			if(i == index+5){
+				break;
+			}
           dataService.events[i].thumb = 'http://lorempixel.com/200/200/sports/?' + ((new Date()).getTime() + i);
           events.push(dataService.events[i]);
         }
-
-        $timeout(function () {
-          deferred.resolve(events);
-        }, 1000);
+		deferred.resolve(events);
+        
 
         return deferred.promise;
       };

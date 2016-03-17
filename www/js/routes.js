@@ -57,17 +57,31 @@ angular.module('app.routes', ['ionicUIRouter'])
     
   })
   
+  .state('tabsController.mydetail', {
+	 url: '/MyDetail/:id',
+	views: {
+	'tab3':{
+    templateUrl: 'templates/detail.html',
+    controller: 'detailCtrl'
+	}
+	}
+  })
+  
   .state('tabsController.results', {
-	url: '/Results',
+	url: '/Results/:search',
 	views:{
 	'tab2':{
 	templateUrl: 'templates/results.html',
 	controller: 'resultCtrl'
 	}
+	
+	},
+	params:{
+		search: 'l'
 	}
   })
 
-  .state('tabsController.myEvents', {
+  $stateProvider.state('tabsController.myEvents', {
     url: '/MyEvents',
     views: {
       'tab3': {

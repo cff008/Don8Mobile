@@ -5,7 +5,7 @@
     <form name="form.search" ng-submit="form.search.$valid && goToList()">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" ng-model="search.string" required="required" placeholder="Organization or event name or district">
+        <input type="text" ng-model="search.string"  required="required" placeholder="Organization or event name or district">
       </label>
       <br />
       <!--<div>
@@ -46,7 +46,7 @@
       <ion-item class="text-center item-stable" ng-if="events && !events.length">No events found :(</ion-item>
     </ion-list>
     <ion-infinite-scroll
-      
+      ng-if="moreDataCanBeLoaded()"
       on-infinite="loadNext()">
     </ion-infinite-scroll>
   </ion-content>
