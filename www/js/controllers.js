@@ -95,6 +95,10 @@ angular.module('app.controllers', [])
         //TODO: Validate email address and password combination via the server
     }
 })
+
+.controller('forgotPasswordCtrl', function($scope) {
+
+})
    
 .controller('signupCtrl', function($scope) {
   $scope.data = {};
