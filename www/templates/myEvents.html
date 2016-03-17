@@ -1,14 +1,10 @@
-
+<!-- Fixed -->
 <ion-view title="My Events">
-<<<<<<< HEAD
-    <ion-content overflow-scroll="true" background: url(img/background.jpg) padding="true" class="has-header">
-=======
     <ion-content padding="true"style="background: url(img/background.jpg) no-repeat center;" >
 
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
-
+    
 	<ion-list>
-	
       <ion-item class="item-icon-right item-avatar item-stable" ui-sref="tabsController.mydetail({id: event.id})" collection-repeat="event in events track by event.id | limitTo:4">
         <img ng-src="{{event.thumb}}">
         <h2 class="positive">{{event.name}}</h2>
@@ -25,10 +21,5 @@
       on-infinite="loadNext()">
     </ion-infinite-scroll>
   </ion-content>
-
-
->>>>>>> origin/master
-
-
 	</ion-content>
 </ion-view>
