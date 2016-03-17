@@ -33,6 +33,7 @@
     <h3><font color="white">Volunteer Opportunities</h3>
 	
     <ion-list>
+    
       <ion-item class="item-icon-right item-avatar item-stable" ui-sref="tabsController.detail({id: event.id})" collection-repeat="event in events track by event.id | limitTo:limit">
         <img ng-src="{{event.thumb}}">
         <h2 class="positive">{{event.name}}</h2>

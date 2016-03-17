@@ -43,20 +43,27 @@ angular.module('app.controllers', [])
 	$scope.data = {};
  
     $scope.login = function() {
-    	console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
-        LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
+    	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
+        LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
             //var alertPopup = $ionicPopup.alert({template: 'Hi'});
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
-                template: 'Please check your credentials! Username: user\nPassword: secret'
+                template: 'Please check your credentials! Username: user Password: secret'
             });
         });
+
+        //TODO: Validate email address and password combination via the server
     }
 })
    
 .controller('signupCtrl', function($scope) {
+  $scope.data = {};
+
+    $scope.signup = function(){
+      console.log("Account Created: NAME: " + $scope.data.username + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password);
+    }
 
 })
    
