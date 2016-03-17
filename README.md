@@ -1,25 +1,29 @@
-Ionic App Base
+Ionic App - Don8 Mobile App
 =====================
 
-A starting project for Ionic that optionally supports using custom SCSS.
+This is a guide to testing the app in your browser
 
 ## Using this project
 
-We recommend using the [Ionic CLI](https://github.com/driftyco/ionic-cli) to create new Ionic projects that are based on this project but use a ready-made starter template.
+We recommend using the [Ionic CLI](https://github.com/driftyco/ionic-cli) to run this project.
 
-For example, to start a new Ionic project with the default tabs interface, make sure the `ionic` utility is installed:
+Make sure the `ionic` utility is installed:
 
 ```bash
 $ npm install -g ionic
 ```
 
-Then run:
+Once you've installed ionic and have the repository saved locally, move into the directory containing the project.
 
 ```bash
-$ ionic start myProject tabs
+$ cd ~/mobile-app
 ```
 
-More info on this can be found on the Ionic [Getting Started](http://ionicframework.com/getting-started) page and the [Ionic CLI](https://github.com/driftyco/ionic-cli) repo.
+Then, to view the application in your browser, run:
 
-## Issues
-Issues have been disabled on this repo, if you do find an issue or have a question consider posting it on the [Ionic Forum](http://forum.ionicframework.com/).  Or else if there is truly an error, follow our guidelines for [submitting an issue](http://ionicframework.com/submit-issue/) to the main Ionic repository.
+```bash
+$ ionic serve -l
+```
+
+This will display the app as both iOS and Android side-by-side.
+
