@@ -4,19 +4,19 @@
 
             <ion-list>
 
-                <div class="item item-image">
-                    <img src="/img/don8-logo.png">
-                </div>
+                <div style="text-align:center;">
+                    <img src="img/don8-logo.png" width="75%" height="auto">
+                 </div> 
 
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="" name="emailAddress" ng-model="data.email">
+                    <input type="text" placeholder="name@example.com" name="emailAddress" ng-model="data.email">
                     <!-- <span ng-show="loginForm.emailAddress.$error.email">Invalid Email</span> -->
                 </label>
                 
                 <label class="item item-input">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="" ng-model="data.password">
+                    <input type="password" placeholder="password" ng-model="data.password">
                 </label>
 
             </ion-list>
@@ -24,7 +24,7 @@
             <button id="login-button1" class="button button-stable  button-block" ng-click="login()">Log in</button>
             <a ui-sref="signup" id="login-button2" class="button button-positive  button-block button-clear">Create an account</a>
             <!-- TODO: Fix the ui-sref for the forgot-password-link once a page is created! -->
-            <a ui-sref="signup" id="forgot-password-link" class="button button-positive button-block button-clear">Forgot Password</a>
+            <a ui-sref="forgotpassword" id="forgot-password-link" class="button button-positive button-block button-clear">Forgot Password</a>
         </form>
     </ion-content>
 </ion-view>

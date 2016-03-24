@@ -112,6 +112,12 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'loginCtrl'
   })
 
+  .state('forgotpassword', {
+    url: '/forgotPassword',
+    templateUrl: 'templates/forgotPassword.html',
+    controller: 'forgotPasswordCtrl'
+  })
+
   .state('signup', {
     url: '/SignUp',
     templateUrl: 'templates/signup.html',
