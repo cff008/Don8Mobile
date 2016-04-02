@@ -14,9 +14,9 @@ angular.module('app.controllers', [])
 		$scope.newEvents = [];
 	$scope.index = 0;
       $scope.goToList = function () {
-		var temp = {search:$scope.search.string};
+		 $scope.temp = {search:$scope.search.string};
 		
-        $state.go('tabsController.results', temp );
+        $state.go('tabsController.results', $scope.temp );
       };
 
       $scope.loadNext = function () {
