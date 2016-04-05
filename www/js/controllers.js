@@ -20,15 +20,17 @@ angular.module('app.controllers', [])
       };
 
       $scope.loadNext = function () {
-        eventService.getNext($scope.index).then(function (events) {
+        events = eventService.getNext($scope.index);
+        // .then(function (events) {
 		  $scope.index += 5;
 		  $scope.newEvents = events;
 		  $scope.events = $scope.events.concat($scope.newEvents);
 		  $scope.$broadcast('scroll.infiniteScrollComplete');
-        }).finally(function () {
+        
+// .finally(function () {
           $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
-      };
+        };
+      
 	  
 	$scope.moreDataCanBeLoaded = function(){
 		//hardcoded to be amount of dummy data will change once db hookups are in
