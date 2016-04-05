@@ -74,6 +74,9 @@ angular.module('app.controllers', [])
 	  ])
    
 .controller('settingsCtrl', function($scope) {
+  $scope.data = {};
+
+  //TODO: Add functions(s) to update settings based on user input
 
 })
    
@@ -81,32 +84,49 @@ angular.module('app.controllers', [])
 
 	//Login verifier
 	$scope.data = {};
- 
     $scope.login = function() {
     	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
         LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
-            //var alertPopup = $ionicPopup.alert({template: 'Hi'});
+            console.log("Successful login");
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
                 template: 'Please check your credentials! Username: user Password: secret'
             });
+            console.log("Unsuccessful login");
         });
-
-        //TODO: Validate email address and password combination via the server
     }
 })
 
 .controller('forgotPasswordCtrl', function($scope) {
+  $scope.data = {};
 
+  $scope.submitEmail = function(){
+    //TODO: call service to validate the email address
+
+    //TODO: alert user to check email / of invalid email address
+  }
 })
    
-.controller('signupCtrl', function($scope) {
+.controller('signupCtrl', function($scope, SignupService, $ionicPopup, $state) {
   $scope.data = {};
 
     $scope.signup = function(){
-      console.log("Account Created: NAME: " + $scope.data.username + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password);
+      console.log("Account Created: NAME: " + $scope.data.username + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
+
+      SignupService.signupUser($scope.data.username, $scope.data.email, $scope.data.password).success(function(data) {
+        $state.go('tabsController.myProfile');
+        var alertPopup = $ionicPopup.alert({
+          title: 'Welcome to Don8!',
+          template: 'Please fill out your user profile'
+        });
+      })
+      .error(function(data) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Unable to create account'
+        });
+      });
     }
 
 })
