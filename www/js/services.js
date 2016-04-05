@@ -135,148 +135,156 @@ angular.module('app.services', [])
       };
     }
   ])
-  .service('dataService', [
-    function () {
-      this.events = [{
-        id: 1,
-        name: 'Ski Swap',
-        city: 'Madison',
-        district: 'Downtown',
-		organization: 'Hoofers',
-		description: 'Need people to help with ski swap, help organize skis, and help people navigate swap',
-        street: 'Bowen Ct',
-        number: '1325',
-        zip: '53715',
-        lat: 43.067128,
-        lng: -89.408266,
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      }, {
-        id: 2,
-        name: 'Food Drive',
-        city: 'Middleton',
-        district: 'High School',
-		organization: 'Middleton Football',
-        street: 'Middleton High School Street',
-		description: 'Food time',
-        number: '13',
-        zip: '53533',
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        lat: 51.163893,
-        lng: 10.986114,
-      
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      }, {
-        id: 3,
-        name: 'Education Night',
-        city: 'Madison',
-        district: 'Downtown',
-		organization: 'Madison Children\'s Muesum',
-		description: 'etc',
-        street: 'N Hamilton St',
-        number: '100',
-        zip: '53703',
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        lat: 51.114004,
-        lng: 10.933228,
-        wheelchair: true,
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      }, {
-        id: 4,
-        name: 'Afterschool Tutors',
-        city: 'Madison',
-        district: 'West',
-		organization: 'Madison Memorial',
-        street: 'Madison Memorial',
-		description: 'more',
-        number: '17',
-        zip: '41515',
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        satTrans: true,
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      },{
-	  id: 5,
-        name: 'Afterschool Tutors',
-        city: 'Madison',
-        district: 'West',
-		organization: 'Madison Memorial',
-        street: 'Madison Memorial',
-		description: 'more',
-        number: '17',
-        zip: '41515',
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        satTrans: true,
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      },
-	  {
-	  id: 6,
-        name: 'Afterschool Tutors',
-        city: 'Madison',
-        district: 'West',
-		organization: 'Madison Memorial',
-        street: 'Madison Memorial',
-		description: 'more',
-        number: '17',
-        zip: '41515',
-        dates: [
-          'Monday: 9:00 AM',
-          'Sunday: 9:00 AM'
-        ],
-        satTrans: true,
-        contact: {
-          tel: '1234/56789',
-          email: 'test@example.com'
-        },
-        website: 'http://example.com'
-      }
-	  ];
+  .service('dataService', [ '$http',
+    function ($http) {
+      $http.get('/events/all').then(function(resp){
+        console.log('Success',resp);
+        this.events = resp.data;
+      }, function(err){
+        console.error('Err',err);
+      })
+      // this.events = [{
+       
 
-      this.pages = [{
-        alias: 'impress',
-        content: '<h1>HTML Ipsum Presents</h1> <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p> <h2>Header Level 2</h2> <ol> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ol> <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote> <h3>Header Level 3</h3> <ul> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ul>',
-        title: 'Impress',
-        icon: 'ion-information-circled'
-      }, {
-        alias: 'contact',
-        content: '<h1>HTML Ipsum Presents</h1> <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p> <h2>Header Level 2</h2> <ol> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ol> <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote> <h3>Header Level 3</h3> <ul> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ul>',
-        title: 'Contact',
-        icon: 'ion-paper-airplane'
-      }];
+  //       id: 1,
+  //       name: 'Ski Swap',
+  //       city: 'Madison',
+  //       district: 'Downtown',
+		// organization: 'Hoofers',
+		// description: 'Need people to help with ski swap, help organize skis, and help people navigate swap',
+  //       street: 'Bowen Ct',
+  //       number: '1325',
+  //       zip: '53715',
+  //       lat: 43.067128,
+  //       lng: -89.408266,
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     }, {
+  //       id: 2,
+  //       name: 'Food Drive',
+  //       city: 'Middleton',
+  //       district: 'High School',
+		// organization: 'Middleton Football',
+  //       street: 'Middleton High School Street',
+		// description: 'Food time',
+  //       number: '13',
+  //       zip: '53533',
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       lat: 51.163893,
+  //       lng: 10.986114,
+      
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     }, {
+  //       id: 3,
+  //       name: 'Education Night',
+  //       city: 'Madison',
+  //       district: 'Downtown',
+		// organization: 'Madison Children\'s Muesum',
+		// description: 'etc',
+  //       street: 'N Hamilton St',
+  //       number: '100',
+  //       zip: '53703',
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       lat: 51.114004,
+  //       lng: 10.933228,
+  //       wheelchair: true,
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     }, {
+  //       id: 4,
+  //       name: 'Afterschool Tutors',
+  //       city: 'Madison',
+  //       district: 'West',
+		// organization: 'Madison Memorial',
+  //       street: 'Madison Memorial',
+		// description: 'more',
+  //       number: '17',
+  //       zip: '41515',
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       satTrans: true,
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     },{
+	 //  id: 5,
+  //       name: 'Afterschool Tutors',
+  //       city: 'Madison',
+  //       district: 'West',
+		// organization: 'Madison Memorial',
+  //       street: 'Madison Memorial',
+		// description: 'more',
+  //       number: '17',
+  //       zip: '41515',
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       satTrans: true,
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     },
+	 //  {
+	 //  id: 6,
+  //       name: 'Afterschool Tutors',
+  //       city: 'Madison',
+  //       district: 'West',
+		// organization: 'Madison Memorial',
+  //       street: 'Madison Memorial',
+		// description: 'more',
+  //       number: '17',
+  //       zip: '41515',
+  //       dates: [
+  //         'Monday: 9:00 AM',
+  //         'Sunday: 9:00 AM'
+  //       ],
+  //       satTrans: true,
+  //       contact: {
+  //         tel: '1234/56789',
+  //         email: 'test@example.com'
+  //       },
+  //       website: 'http://example.com'
+  //     }
+	 //  ];
+
+  //     this.pages = [{
+  //       alias: 'impress',
+  //       content: '<h1>HTML Ipsum Presents</h1> <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p> <h2>Header Level 2</h2> <ol> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ol> <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote> <h3>Header Level 3</h3> <ul> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ul>',
+  //       title: 'Impress',
+  //       icon: 'ion-information-circled'
+  //     }, {
+  //       alias: 'contact',
+  //       content: '<h1>HTML Ipsum Presents</h1> <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p> <h2>Header Level 2</h2> <ol> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ol> <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote> <h3>Header Level 3</h3> <ul> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ul>',
+  //       title: 'Contact',
+  //       icon: 'ion-paper-airplane'
+      // }];
     }
   ]);
 
