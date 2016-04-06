@@ -7,27 +7,56 @@ angular.module('app.controllers', [])
 .controller('eventFeedCtrl', [
     '$scope',
     '$state',
-    'eventService',
-    function ($scope, $state, eventService) {
+	'dataService',
+    function ($scope, $state, dataService) {
       $scope.search = {};
 	  $scope.events = [];
-		$scope.newEvents = [];
-	$scope.index = 0;
+	  $scope.event = {}
+	  $scope.newEvents = [];
+	  $scope.index = 0;
+	  addFive = function(events,index){
+		var tempevents = [], i = index;
+		for (i; i < events.length; i = i + 1) {
+            if(i == index+5){
+				break;
+			}
+         tempevents.push(events[i]);
+		}
+		return tempevents;
+		};
+	  
       $scope.goToList = function () {
-		 $scope.temp = {search:$scope.search.string};
+		$scope.temp = {search:$scope.search.string};
+	
+		
 		
         $state.go('tabsController.results', $scope.temp );
+		
       };
 
       $scope.loadNext = function () {
-        eventService.getNext($scope.index).then(function (events) {
-		  $scope.index += 5;
-		  $scope.newEvents = events;
-		  $scope.events = $scope.events.concat($scope.newEvents);
-		  $scope.$broadcast('scroll.infiniteScrollComplete');
-        }).finally(function () {
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+		if($scope.events.length == 0){
+		dataService.getEvents().then(function(events){
+			$scope.newEvents = events;
+			// .then(function (events) {
+			  
+			  
+			  if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			  $scope.$broadcast('scroll.infiniteScrollComplete');
+			
+		// .finally(function () 
+			});
+		}
+		else{
+			if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			 $scope.$broadcast('scroll.infiniteScrollComplete');
+		}
       };
 	  
 	$scope.moreDataCanBeLoaded = function(){
@@ -44,25 +73,40 @@ angular.module('app.controllers', [])
 .controller('myEventsCtrl', [
     '$scope',
     '$state',
-    'eventService',
-    function ($scope, $state, eventService) {
+    'dataService',
+    function ($scope, $state, dataService) {
 		$scope.events = [];
 		$scope.newEvents = [];
 		$scope.index = 0;
+     
       $scope.loadNext = function () {
-        eventService.getNext($scope.index).then(function (events) {
-		  $scope.index += 5;
-		  $scope.newEvents = events;
-		  $scope.events = $scope.events.concat($scope.newEvents);
-		  $scope.$broadcast('scroll.infiniteScrollComplete');
-        }).finally(function () {
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+		if($scope.events.length == 0){
+		dataService.getEvents().then(function(events){
+			$scope.newEvents = events;
+			// .then(function (events) {
+			  
+			  
+			  if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			  $scope.$broadcast('scroll.infiniteScrollComplete');
+			
+		// .finally(function () 
+			});
+		}
+		else{
+			if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			 $scope.$broadcast('scroll.infiniteScrollComplete');
+		}
       };
 	  
 	$scope.moreDataCanBeLoaded = function(){
 		//hardcoded to be amount of dummy data will change once db hookups are in
-		if($scope.index > 6){
+		if($scope.newEvents.length == index){
 			return false;
 		}else{
 			return true;
@@ -72,6 +116,9 @@ angular.module('app.controllers', [])
 	  ])
    
 .controller('settingsCtrl', function($scope) {
+  $scope.data = {};
+
+  //TODO: Add functions(s) to update settings based on user input
 
 })
    
@@ -79,32 +126,49 @@ angular.module('app.controllers', [])
 
 	//Login verifier
 	$scope.data = {};
- 
     $scope.login = function() {
     	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
         LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
-            //var alertPopup = $ionicPopup.alert({template: 'Hi'});
+            console.log("Successful login");
         }).error(function(data) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
                 template: 'Please check your credentials! Username: user Password: secret'
             });
+            console.log("Unsuccessful login");
         });
-
-        //TODO: Validate email address and password combination via the server
     }
 })
 
 .controller('forgotPasswordCtrl', function($scope) {
+  $scope.data = {};
 
+  $scope.submitEmail = function(){
+    //TODO: call service to validate the email address
+
+    //TODO: alert user to check email / of invalid email address
+  }
 })
    
-.controller('signupCtrl', function($scope) {
+.controller('signupCtrl', function($scope, SignupService, $ionicPopup, $state) {
   $scope.data = {};
 
     $scope.signup = function(){
-      console.log("Account Created: NAME: " + $scope.data.username + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password);
+      console.log("Account Created: NAME: " + $scope.data.username + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
+
+      SignupService.signupUser($scope.data.username, $scope.data.email, $scope.data.password).success(function(data) {
+        $state.go('tabsController.myProfile');
+        var alertPopup = $ionicPopup.alert({
+          title: 'Welcome to Don8!',
+          template: 'Please fill out your user profile'
+        });
+      })
+      .error(function(data) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Unable to create account'
+        });
+      });
     }
 
 })
@@ -118,14 +182,23 @@ angular.module('app.controllers', [])
     '$stateParams',
     '$window',
     '$ionicPopup',
-    'eventService',
-    function ($scope, $stateParams, $window, $ionicPopup, eventService) {
+    'dataService',
+    function ($scope, $stateParams, $window, $ionicPopup, dataService) {
+	  var i = 0,
+	  id = $stateParams.id;
 	  console.log($stateParams);	
       $scope.loading = true;
-      eventService.getOne($stateParams.id).then(function (event) {
-        $scope.event = event;
+	  dataService.getEvents().then(function(events){
+		for (i; i < events.length; i = i + 1) {
+          if (events[i].id.toString() === id.toString()) {
+            event = angular.copy(events[i]);
+            event.image = 'http://lorempixel.com/620/480/sports/?' + ((new Date()).getTime() + i);
+            break;
+          }
+        }
       }).finally(function () {
         $scope.loading = false;
+		$scope.apply
       });
 
       $scope.reload = function () {
@@ -178,14 +251,29 @@ angular.module('app.controllers', [])
     '$state',
     '$timeout',
     '$ionicHistory',
-    'eventService',
-    function ($scope, $stateParams, $state, $timeout, $ionicHistory, eventService) {
+    'dataService',
+    function ($scope, $stateParams, $state, $timeout, $ionicHistory, dataService) {
       var first = true;
       $scope.limit = 10;
       $scope.show = {
         list: true
       };
-
+	  searchFor = function(searchString) {
+		var founds =[],
+		currentEvent,
+		i = 0;
+		 for (i; i < events.length; i = i + 1) {
+          currentEvent = events[i];
+          if (currentEvent.name && currentEvent.name.indexOf(searchString) !== -1 || currentEvent.city && currentEvent.city.indexOf(searchString) !== -1 || currentEvent.district && currentEvent.district.indexOf(searchString) !== -1   || currentEvent.organization && currentEvent.organization.indexOf(searchString) !== -1){
+//$filter('lowercase')(currentEvent.name)==$filter('lowercase')(searchString)||$filter('lowercase')(currentEvent.organization)==$filter('lowercase')(searchString) ||$filter('lowercase')(currentEvent.city)==$filter('lowercase')(searchString)){
+           // if (check(currentEvent, satTrans, wheelChair, wheelChairLift)) {
+  
+              founds.push(currentEvent);
+           // }
+          }
+        }
+		return founds
+	  };
       // show next 10
       $scope.loadMore = function () {
         if (!first) {
@@ -201,33 +289,26 @@ angular.module('app.controllers', [])
             wheelChairLift = $stateParams.wheelChairLift === 'true',
             search = $stateParams.search;
 
-        if (wheelChair !== $scope.wheelChair || wheelChairLift !== $scope.wheelChairLift || search !== $scope.search) {
-          $scope.wheelChair = wheelChair;
-          $scope.wheelChairLift = wheelChairLift;
+        if ( search !== $scope.search) {
           $scope.search = search;
           $scope.loading = true;
-          eventService.search(search, wheelChair, wheelChairLift).then(function (events) {
-            $scope.limit = 10;
-            $scope.events = events;
-          }).finally(function () {
-            $scope.loading = false;
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-          });
-        } else {
+		  $scope.limit = 10;
+          $scope.events =  searchFor(search);
+          $scope.loading = false;
           $scope.$broadcast('scroll.infiniteScrollComplete');
-        }
-      };
+      }
+	  };
 
       $scope.reload = function () {
         $scope.loading = true;
-        eventService.search($scope.search, $scope.wheelChair, $scope.wheelChairLift).then(function (events) {
-          $scope.limit = 10;
-          $scope.events = events;
-        }).finally(function () {
-          $scope.loading = false;
-          $scope.$broadcast('scroll.refreshComplete');
-        });
-      };
+		events =  searchfor($scope.search);
+        $scope.limit = 10;
+        $scope.events = events;
+        
+        $scope.loading = false;
+        $scope.$broadcast('scroll.refreshComplete');
+        };
+      
 
       $scope.goToMap = function () {
         $ionicHistory.currentView($ionicHistory.backView());
@@ -253,4 +334,3 @@ angular.module('app.controllers', [])
       };
     }
   ])
- 
