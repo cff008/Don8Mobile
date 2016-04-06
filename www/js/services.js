@@ -23,14 +23,18 @@ angular.module('app.services', [])
 
           $http({
             method: 'GET',
-            url: 'http://www.don8don8.site/login.php',
+            url: '/login',
             params: {email: email, password: pw}
           }).then(function successCallback(response) {
             //this callback will be called asynchronously when the response is available
-            if(response.data.status == 'OK'){  //TODO: Add check on response.status?
+            if(response.data.status == 'OK'){
               deferred.resolve('Welcome ' + email + '!');
+            } else if(response.data.status == 'INVALID_REQUEST') {
+              deferred.reject('Username or password is incorrect');
+            } else if(response.data.status == 'UNKNOWN_ERROR') {
+              deferred.reject('Something went wrong. Please try again.');
             } else {
-              deferred.reject('Wrong credentials.');
+              deferred.reject('This shouldn\'t happen');
             }
           }, function errorCallback(response) {
             //called asynchronously if an error occurs or server returns response with an error status
@@ -51,28 +55,31 @@ angular.module('app.services', [])
 
 .service('SignupService', function($q, $http) {
   return{
-    signupUser: function(username, email, password) {
+    signupUser: function(firstname, lastname, email, password) {
       var deferred = $q.defer();
       var promise = deferred.promise;
 
-      //TODO: Call the server
-      deferred.resolve('Welcome' + username + '!');
-
-      /*$http({
+      $http({
         method: 'GET',
-        url: 'http://www.don8don8.site/' //TODO: finish this call
+        url: '/create_profile',
+        params: {firstname: firstname, lastname: lastname, email: email, password: password}
       }).then(function successCallback(response) {
         //this callback will be called asynchronously when the response is available
-        if(response.data.TODO == 'TODO'){
-          deferred.resolve('Welcome ' + username + '!');
+        if(response.data.status == 'OK'){
+          deferred.resolve('Welcome ' + firstname + ' ' + lastname + '!');
+        } else if(response.data.status == 'UNKNOWN_ERROR') {
+          deferred.resolve('Something went wrong. Please try again');
+        } else if(response.data.status == 'INVALID_REQUEST'){
+          deferred.resolve('That email address is already taken');
         } else {
-          deferred.reject('Cannot create user account');
+          deferred.resolve('This shouldn\'t happen');
         }
+
         //TODO: Add cases for: username/email already exists, etc.
       }, function errorCallback(response) {
         //called asynchronously if an error occurs or the server returns response with an error status
         deferred.reject('Server communication error');
-      });*/
+      });
 
       promise.success = function(fn) {
         promise.then(fn);
