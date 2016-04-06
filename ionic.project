@@ -6,6 +6,10 @@
   		"path": "/events/all",
   		"proxyUrl": "http://don8don8.site/data/events.php"
   	},
+	{
+  		"path": "/event",
+  		"proxyUrl": "http://don8don8.site/data/events.php"
+  	},
   	{
   		"path": "/login",
   		"proxyUrl": "http://www.don8don8.site/login.php"

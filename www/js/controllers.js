@@ -14,13 +14,13 @@ angular.module('app.controllers', [])
 	  $scope.event = {}
 	  $scope.newEvents = [];
 	  $scope.index = 0;
-	  addFive = function(events,index){
+	  addFive = function(eventss,index){
 		var tempevents = [], i = index;
-		for (i; i < events.length; i = i + 1) {
+		for (i; i < eventss.length; i = i + 1) {
             if(i == index+5){
 				break;
 			}
-         tempevents.push(events[i]);
+         tempevents.push(eventss[i]);
 		}
 		return tempevents;
 		};
@@ -37,7 +37,7 @@ angular.module('app.controllers', [])
       $scope.loadNext = function () {
 		if($scope.events.length == 0){
 		dataService.getEvents().then(function(events){
-			$scope.newEvents = events;
+			  $scope.newEvents = events;
 			// .then(function (events) {
 			  
 			  
@@ -61,7 +61,7 @@ angular.module('app.controllers', [])
 	  
 	$scope.moreDataCanBeLoaded = function(){
 		//hardcoded to be amount of dummy data will change once db hookups are in
-		if($scope.index > 6){
+		if($scope.index == $scope.newEvents.length && $scope.newEvents.length != 0){
 			return false;
 		}else{
 			return true;
@@ -81,7 +81,7 @@ angular.module('app.controllers', [])
      
       $scope.loadNext = function () {
 		if($scope.events.length == 0){
-		dataService.getEvents().then(function(events){
+		dataService.getMyEvents().then(function(events){
 			$scope.newEvents = events;
 			// .then(function (events) {
 			  
@@ -105,8 +105,7 @@ angular.module('app.controllers', [])
       };
 	  
 	$scope.moreDataCanBeLoaded = function(){
-		//hardcoded to be amount of dummy data will change once db hookups are in
-		if($scope.newEvents.length == index){
+		if($scope.newEvents.length == $scope.index && $scope.newEvents.length != 0){
 			return false;
 		}else{
 			return true;
@@ -194,29 +193,26 @@ angular.module('app.controllers', [])
     '$ionicPopup',
     'dataService',
     function ($scope, $stateParams, $window, $ionicPopup, dataService) {
+	  $scope.event;
 	  var i = 0,
 	  id = $stateParams.id;
 	  console.log($stateParams);	
       $scope.loading = true;
-	  dataService.getEvents().then(function(events){
-		for (i; i < events.length; i = i + 1) {
-          if (events[i].id.toString() === id.toString()) {
-            event = angular.copy(events[i]);
-            event.image = 'http://lorempixel.com/620/480/sports/?' + ((new Date()).getTime() + i);
-            break;
-          }
-        }
+	  dataService.getEvent(id).then(function(events){
+		$scope.event = events;
       }).finally(function () {
         $scope.loading = false;
 		$scope.apply
       });
 
       $scope.reload = function () {
-        eventService.getOne($stateParams.id).then(function (event) {
-          $scope.event = event;
-        }).finally(function () {
-          $scope.$broadcast('scroll.refreshComplete');
-        });
+		$scope.loading = true;
+        dataService.getEvent(id).then(function(events){
+		$scope.event = events;
+      }).finally(function () {
+        $scope.loading = false;
+		$scope.apply
+      });
       };
 
       $scope.call = function () {
@@ -268,21 +264,18 @@ angular.module('app.controllers', [])
       $scope.show = {
         list: true
       };
-	  searchFor = function(searchString) {
+	  
+	  searchFor = function(searchString, events) {
 		var founds =[],
 		currentEvent,
 		i = 0;
 		 for (i; i < events.length; i = i + 1) {
           currentEvent = events[i];
-          if (currentEvent.name && currentEvent.name.indexOf(searchString) !== -1 || currentEvent.city && currentEvent.city.indexOf(searchString) !== -1 || currentEvent.district && currentEvent.district.indexOf(searchString) !== -1   || currentEvent.organization && currentEvent.organization.indexOf(searchString) !== -1){
-//$filter('lowercase')(currentEvent.name)==$filter('lowercase')(searchString)||$filter('lowercase')(currentEvent.organization)==$filter('lowercase')(searchString) ||$filter('lowercase')(currentEvent.city)==$filter('lowercase')(searchString)){
-           // if (check(currentEvent, satTrans, wheelChair, wheelChairLift)) {
-  
+          if (currentEvent.name.toLowerCase().indexOf(searchString.toLowerCase()) != -1 ||  currentEvent.organization.toLowerCase().indexOf(searchString.toLowerCase()) != -1){
               founds.push(currentEvent);
-           // }
           }
         }
-		return founds
+		return founds;
 	  };
       // show next 10
       $scope.loadMore = function () {
@@ -300,12 +293,15 @@ angular.module('app.controllers', [])
             search = $stateParams.search;
 
         if ( search !== $scope.search) {
+		
           $scope.search = search;
           $scope.loading = true;
 		  $scope.limit = 10;
-          $scope.events =  searchFor(search);
+		  dataService.getEvents().then( function(eventss){
+          $scope.events =  searchFor(search,eventss);
           $scope.loading = false;
           $scope.$broadcast('scroll.infiniteScrollComplete');
+		  });
       }
 	  };
 

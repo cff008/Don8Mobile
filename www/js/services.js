@@ -276,20 +276,58 @@ angular.module('app.services', [])
 .service('dataService', [ '$http', '$q',
     function ($http, $q) { return {
       getEvents: function(){
-      return $http.get('/events/all').then(function(resp){
-        if(typeof resp.data === 'object'){
-          this.events = resp.data.events;
-		    console.log(this.events);
-          return this.events;
-        }else{
-          return $q.reject(resp.data);
-        }
-       
-      }, function(err){
-        return $q.reject(resp.data);
-      })
-     
-    }
+		  return $http.get('/events/all').then(function(resp){
+			if(typeof resp.data === 'object'){
+			  this.events = resp.data.events;
+				console.log(this.events);
+			  return $q.resolve(this.events);
+			}else{
+			  return $q.reject(resp.data);
+			}
+		   
+		  }, function(err){
+			return $q.reject(resp.data);
+		  });
+		},
+	getEvent: function(id){
+		return $http({
+      method: 'GET',
+      url: '/event',
+      params: {id: id}
+    }).then(function successCallback(response) {
+		if(response.data.status == 'OK'){
+        return response.data.events;
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        $q.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        $q.reject('Invalid userid');
+      } else {
+        $q.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      $q.reject('Server communication error');
+    });
+	  },
+	getMyEvents: function(id){
+		return $http({
+      method: 'GET',
+      url: '/event',
+      params: {userid: id}
+    }).then(function successCallback(response) {
+		if(response.data.status == 'OK'){
+        return response.data.events;
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        $q.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        $q.reject('Invalid userid');
+      } else {
+        $q.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      $q.reject('Server communication error');
+    });
+	  }
+	  
   }
 }
   ]);
