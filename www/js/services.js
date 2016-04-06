@@ -99,13 +99,14 @@ angular.module('app.services', [])
 .service('SettingsService', function($q, $http, $rootScope){
   this.getSettings = function(){
     var deferred = $q.defer();
-    $http({
+    var promise = $http({
       method: 'GET',
       url: '/get_settings',
       params: {id: $rootScope.userid}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
         deferred.resolve('Successfully attained stored settings');
+        console.log("Settings retrieved from server");
         return response.data.settings;
       } else if(response.data.status == 'UNKNOWN_ERROR'){
         deferred.reject('Something went wrong. Please try again.')
@@ -117,6 +118,7 @@ angular.module('app.services', [])
     }, function errorCallback(response){
       deferred.reject('Server communication error');
     });
+    return promise;
   }
 
   this.updateSettings = function(push, email, location){
@@ -128,6 +130,7 @@ angular.module('app.services', [])
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
         deferred.resolve('Successfully updated settings');
+        console.log("Settings updated on server");
         return response.data.settings;
       } else if(response.data.status == 'UNKNOWN_ERROR'){
         deferred.reject('Something went wrong. Please try again.')

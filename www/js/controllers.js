@@ -73,18 +73,31 @@ angular.module('app.controllers', [])
 	}
 	  ])
    
-.controller('settingsCtrl', function($rootScope, $scope, SettingsService) {
+.controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state) {
 
   $scope.data = {};
-  SettingsService.getSettings(function(settingsData){
-    $scope.data.pushNotifications = settingsData.push;
-    $scope.data.emailNotifications = settingsData.email;
-    $scope.data.locationAccess = settingsData.location;
-  });
+
+
+  $scope.getSettings = function() {
+    SettingsService.getSettings().then(function(data){
+      $scope.data.pushNotifications = data.push;
+      $scope.data.emailNotifications = data.email;
+      $scope.data.locationAccess = data.location;
+      console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
+      //$scope.$digest();
+    });
+  }
 
   $scope.updateSettings = function() {
     //call service to POST new settings to server
     SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess);
+  }
+
+  $scope.logout = function(){
+    //TODO: clear information about current user - iteration3?
+    
+    //change state to login screen
+    $state.go('login');
   }
 
 })
@@ -123,9 +136,8 @@ angular.module('app.controllers', [])
   $scope.data = {};
 
     $scope.signup = function(){
-      console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
-
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
+        console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
         var alertPopup = $ionicPopup.alert({
           title: 'Welcome to Don8!',

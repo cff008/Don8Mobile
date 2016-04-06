@@ -1,40 +1,28 @@
-<ion-view title="Settings">
+<ion-view title="Settings" ng-init="getSettings()">
     <ion-content style="background: url(img/background.jpg) no-repeat center;" padding="true" class="has-header">
 
 
 		<ul class="list">
-          <li class="item item-toggle">
-            Push Notifications
-            <label class="toggle" ng-model="data.pushNotifications" ng-change="updateSettings()">
-              <input type="checkbox">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
+          <li>
+            <ion-toggle ng-model="data.pushNotifications" ng-change="updateSettings()" ng-checked="data.pushNotifications">
+              Push Notifications
+            </ion-toggle>
           </li>
           
-          <li class="item item-toggle" ng-model="data.emailNotifications" ng-change="updateSettings()">
-            Email Notifications
-            <label class="toggle">
-              <input type="checkbox">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
+          <li>
+            <ion-toggle ng-model="data.emailNotifications" ng-change="updateSettings()" ng-checked="data.emailNotifications">
+              Email Notifications
+            </ion-toggle>
           </li>
 
-          <li class="item item-toggle" ng-model="data.locationAccess" ng-change="updateSettings()">
-            Location Access
-            <label class="toggle">
-              <input type="checkbox">
-              <div class="track">
-                <div class="handle"></div>
-              </div>
-            </label>
+          <li>
+            <ion-toggle ng-model="data.locationAccess" ng-change="updateSettings()" ng-checked="data.locationAccess">
+             Location Access
+            </ion-toggle>
           </li>
 
           <li class="item item-button">
-            <a ui-sref="login" id="logout-button" class="button button-stable  button-block">Logout</a>
+            <button id="logout-button" class="button button-stable  button-block" ng-click="logout()">Logout</button>
           </li>
         </ul>
 
