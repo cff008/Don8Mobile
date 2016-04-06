@@ -7,34 +7,61 @@ angular.module('app.controllers', [])
 .controller('eventFeedCtrl', [
     '$scope',
     '$state',
-    'eventService',
-    function ($scope, $state, eventService) {
+	'dataService',
+    function ($scope, $state, dataService) {
       $scope.search = {};
 	  $scope.events = [];
-		$scope.newEvents = [];
-	$scope.index = 0;
+	  $scope.event = {}
+	  $scope.newEvents = [];
+	  $scope.index = 0;
+	  addFive = function(eventss,index){
+		var tempevents = [], i = index;
+		for (i; i < eventss.length; i = i + 1) {
+            if(i == index+5){
+				break;
+			}
+         tempevents.push(eventss[i]);
+		}
+		return tempevents;
+		};
+	  
       $scope.goToList = function () {
-		 $scope.temp = {search:$scope.search.string};
+		$scope.temp = {search:$scope.search.string};
+	
+		
 		
         $state.go('tabsController.results', $scope.temp );
+		
       };
 
       $scope.loadNext = function () {
-        events = eventService.getNext($scope.index);
-        // .then(function (events) {
-		  $scope.index += 5;
-		  $scope.newEvents = events;
-		  $scope.events = $scope.events.concat($scope.newEvents);
-		  $scope.$broadcast('scroll.infiniteScrollComplete');
-        
-// .finally(function () {
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        };
-      
+		if($scope.events.length == 0){
+		dataService.getEvents().then(function(events){
+			  $scope.newEvents = events;
+			// .then(function (events) {
+			  
+			  
+			  if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			  $scope.$broadcast('scroll.infiniteScrollComplete');
+			
+		// .finally(function () 
+			});
+		}
+		else{
+			if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			 $scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+      };
 	  
 	$scope.moreDataCanBeLoaded = function(){
 		//hardcoded to be amount of dummy data will change once db hookups are in
-		if($scope.index > 6){
+		if($scope.index == $scope.newEvents.length && $scope.newEvents.length != 0){
 			return false;
 		}else{
 			return true;
@@ -46,25 +73,39 @@ angular.module('app.controllers', [])
 .controller('myEventsCtrl', [
     '$scope',
     '$state',
-    'eventService',
-    function ($scope, $state, eventService) {
+    'dataService',
+    function ($scope, $state, dataService) {
 		$scope.events = [];
 		$scope.newEvents = [];
 		$scope.index = 0;
+     
       $scope.loadNext = function () {
-        eventService.getNext($scope.index).then(function (events) {
-		  $scope.index += 5;
-		  $scope.newEvents = events;
-		  $scope.events = $scope.events.concat($scope.newEvents);
-		  $scope.$broadcast('scroll.infiniteScrollComplete');
-        }).finally(function () {
-          $scope.$broadcast('scroll.infiniteScrollComplete');
-        });
+		if($scope.events.length == 0){
+		dataService.getMyEvents().then(function(events){
+			$scope.newEvents = events;
+			// .then(function (events) {
+			  
+			  
+			  if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			  $scope.$broadcast('scroll.infiniteScrollComplete');
+			
+		// .finally(function () 
+			});
+		}
+		else{
+			if($scope.newEvents != $scope.events){
+			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
+			  $scope.index += $scope.newEvents.length;
+			  }
+			 $scope.$broadcast('scroll.infiniteScrollComplete');
+		}
       };
 	  
 	$scope.moreDataCanBeLoaded = function(){
-		//hardcoded to be amount of dummy data will change once db hookups are in
-		if($scope.index > 6){
+		if($scope.newEvents.length == $scope.index && $scope.newEvents.length != 0){
 			return false;
 		}else{
 			return true;
@@ -136,6 +177,7 @@ angular.module('app.controllers', [])
   $scope.data = {};
 
     $scope.signup = function(){
+
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
         console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
@@ -163,22 +205,28 @@ angular.module('app.controllers', [])
     '$stateParams',
     '$window',
     '$ionicPopup',
-    'eventService',
-    function ($scope, $stateParams, $window, $ionicPopup, eventService) {
+    'dataService',
+    function ($scope, $stateParams, $window, $ionicPopup, dataService) {
+	  $scope.event;
+	  var i = 0,
+	  id = $stateParams.id;
 	  console.log($stateParams);	
       $scope.loading = true;
-      eventService.getOne($stateParams.id).then(function (event) {
-        $scope.event = event;
+	  dataService.getEvent(id).then(function(events){
+		$scope.event = events;
       }).finally(function () {
         $scope.loading = false;
+		$scope.apply
       });
 
       $scope.reload = function () {
-        eventService.getOne($stateParams.id).then(function (event) {
-          $scope.event = event;
-        }).finally(function () {
-          $scope.$broadcast('scroll.refreshComplete');
-        });
+		$scope.loading = true;
+        dataService.getEvent(id).then(function(events){
+		$scope.event = events;
+      }).finally(function () {
+        $scope.loading = false;
+		$scope.apply
+      });
       };
 
       $scope.call = function () {
@@ -223,14 +271,26 @@ angular.module('app.controllers', [])
     '$state',
     '$timeout',
     '$ionicHistory',
-    'eventService',
-    function ($scope, $stateParams, $state, $timeout, $ionicHistory, eventService) {
+    'dataService',
+    function ($scope, $stateParams, $state, $timeout, $ionicHistory, dataService) {
       var first = true;
       $scope.limit = 10;
       $scope.show = {
         list: true
       };
-
+	  
+	  searchFor = function(searchString, events) {
+		var founds =[],
+		currentEvent,
+		i = 0;
+		 for (i; i < events.length; i = i + 1) {
+          currentEvent = events[i];
+          if (currentEvent.name.toLowerCase().indexOf(searchString.toLowerCase()) != -1 ||  currentEvent.organization.toLowerCase().indexOf(searchString.toLowerCase()) != -1){
+              founds.push(currentEvent);
+          }
+        }
+		return founds;
+	  };
       // show next 10
       $scope.loadMore = function () {
         if (!first) {
@@ -246,33 +306,29 @@ angular.module('app.controllers', [])
             wheelChairLift = $stateParams.wheelChairLift === 'true',
             search = $stateParams.search;
 
-        if (wheelChair !== $scope.wheelChair || wheelChairLift !== $scope.wheelChairLift || search !== $scope.search) {
-          $scope.wheelChair = wheelChair;
-          $scope.wheelChairLift = wheelChairLift;
+        if ( search !== $scope.search) {
+		
           $scope.search = search;
           $scope.loading = true;
-          eventService.search(search, wheelChair, wheelChairLift).then(function (events) {
-            $scope.limit = 10;
-            $scope.events = events;
-          }).finally(function () {
-            $scope.loading = false;
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-          });
-        } else {
+		  $scope.limit = 10;
+		  dataService.getEvents().then( function(eventss){
+          $scope.events =  searchFor(search,eventss);
+          $scope.loading = false;
           $scope.$broadcast('scroll.infiniteScrollComplete');
-        }
-      };
+		  });
+      }
+	  };
 
       $scope.reload = function () {
         $scope.loading = true;
-        eventService.search($scope.search, $scope.wheelChair, $scope.wheelChairLift).then(function (events) {
-          $scope.limit = 10;
-          $scope.events = events;
-        }).finally(function () {
-          $scope.loading = false;
-          $scope.$broadcast('scroll.refreshComplete');
-        });
-      };
+		events =  searchfor($scope.search);
+        $scope.limit = 10;
+        $scope.events = events;
+        
+        $scope.loading = false;
+        $scope.$broadcast('scroll.refreshComplete');
+        };
+      
 
       $scope.goToMap = function () {
         $ionicHistory.currentView($ionicHistory.backView());
@@ -298,4 +354,3 @@ angular.module('app.controllers', [])
       };
     }
   ])
- 
