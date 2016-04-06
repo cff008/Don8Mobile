@@ -1,8 +1,19 @@
 {
   "name": "Don8",
   "app_id": "2ff3c64c",
-  "proxies": [{
-  	"path": "/events/all",
-  	"proxyUrl": "http://don8don8.site/data/events.php"
-  }] 
+  "proxies": [
+  	{
+  		"path": "/events/all",
+  		"proxyUrl": "http://don8don8.site/data/events.php"
+  	},
+  	{
+  		"path": "/login",
+  		"proxyUrl": "http://www.don8don8.site/login.php"
+  	},
+  	{
+  		"path": "/create_profile",
+  		"proxyUrl": "http://www.don8don8.site/create_profile.php"
+  	}
+  ] 
 }
+
