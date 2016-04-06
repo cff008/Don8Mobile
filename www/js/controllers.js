@@ -90,9 +90,10 @@ angular.module('app.controllers', [])
             $state.go('tabsController.myProfile');
             console.log("Successful login");
         }).error(function(data) {
+          //TODO: do different things for invalid password and server errors
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
-                template: 'Please check your credentials! Username: user Password: secret'
+                template: 'Failed ' + data.reason
             });
             console.log("Unsuccessful login");
         });

@@ -8,18 +8,34 @@ angular.module('app.services', [])
 
 }])
 
-.service('LoginService', function($q) {
+.service('LoginService', function($q, $http) {
   return {
       loginUser: function(email, pw) {
           var deferred = $q.defer();
           var promise = deferred.promise;
 
           //TODO: replace these checks with calls to the server
-          if (email == 'user' && pw == 'secret') {
+          /*if (email == 'user' && pw == 'secret') {
               deferred.resolve('Welcome ' + email + '!');
           } else {
               deferred.reject('Wrong credentials.');
-          }
+          }*/
+
+          $http({
+            method: 'GET',
+            url: 'http://www.don8don8.site/login.php',
+            params: {email: email, password: pw}
+          }).then(function successCallback(response) {
+            //this callback will be called asynchronously when the response is available
+            if(response.data.status == 'OK'){  //TODO: Add check on response.status?
+              deferred.resolve('Welcome ' + email + '!');
+            } else {
+              deferred.reject('Wrong credentials.');
+            }
+          }, function errorCallback(response) {
+            //called asynchronously if an error occurs or server returns response with an error status
+            deferred.reject('Server communication error');
+          });
           promise.success = function(fn) {
               promise.then(fn);
               return promise;
@@ -33,7 +49,7 @@ angular.module('app.services', [])
   }
 })
 
-.service('SignupService', function($q) {
+.service('SignupService', function($q, $http) {
   return{
     signupUser: function(username, email, password) {
       var deferred = $q.defer();
@@ -41,6 +57,22 @@ angular.module('app.services', [])
 
       //TODO: Call the server
       deferred.resolve('Welcome' + username + '!');
+
+      /*$http({
+        method: 'GET',
+        url: 'http://www.don8don8.site/' //TODO: finish this call
+      }).then(function successCallback(response) {
+        //this callback will be called asynchronously when the response is available
+        if(response.data.TODO == 'TODO'){
+          deferred.resolve('Welcome ' + username + '!');
+        } else {
+          deferred.reject('Cannot create user account');
+        }
+        //TODO: Add cases for: username/email already exists, etc.
+      }, function errorCallback(response) {
+        //called asynchronously if an error occurs or the server returns response with an error status
+        deferred.reject('Server communication error');
+      });*/
 
       promise.success = function(fn) {
         promise.then(fn);
