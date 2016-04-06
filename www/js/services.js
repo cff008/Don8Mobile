@@ -8,7 +8,7 @@ angular.module('app.services', [])
 
 }])
 
-.service('LoginService', function($q, $http) {
+.service('LoginService', function($q, $http, $rootScope) {
   return {
       loginUser: function(email, pw) {
           var deferred = $q.defer();
@@ -29,6 +29,7 @@ angular.module('app.services', [])
             //this callback will be called asynchronously when the response is available
             if(response.data.status == 'OK'){
               deferred.resolve('Welcome ' + email + '!');
+              $rootScope.userid = response.data.userid;
             } else if(response.data.status == 'INVALID_REQUEST') {
               deferred.reject('Username or password is incorrect');
             } else if(response.data.status == 'UNKNOWN_ERROR') {
@@ -53,7 +54,7 @@ angular.module('app.services', [])
   }
 })
 
-.service('SignupService', function($q, $http) {
+.service('SignupService', function($q, $http, $rootScope) {
   return{
     signupUser: function(firstname, lastname, email, password) {
       var deferred = $q.defer();
@@ -67,12 +68,13 @@ angular.module('app.services', [])
         //this callback will be called asynchronously when the response is available
         if(response.data.status == 'OK'){
           deferred.resolve('Welcome ' + firstname + ' ' + lastname + '!');
+          $rootScope.userid = response.data.userid;
         } else if(response.data.status == 'UNKNOWN_ERROR') {
-          deferred.resolve('Something went wrong. Please try again');
+          deferred.reject('Something went wrong. Please try again.');
         } else if(response.data.status == 'INVALID_REQUEST'){
-          deferred.resolve('That email address is already taken');
+          deferred.reject('That email address is already taken');
         } else {
-          deferred.resolve('This shouldn\'t happen');
+          deferred.reject('This shouldn\'t happen');
         }
 
         //TODO: Add cases for: username/email already exists, etc.
@@ -91,6 +93,52 @@ angular.module('app.services', [])
       }
       return promise;
     }
+  }
+})
+
+.service('SettingsService', function($q, $http, $rootScope){
+  this.getSettings = function(){
+    var deferred = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/get_settings',
+      params: {id: $rootScope.userid}
+    }).then(function successCallback(response) {
+      if(response.data.status == 'OK'){
+        deferred.resolve('Successfully attained stored settings');
+        return response.data.settings;
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        deferred.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        deferred.reject('Invalid userid');
+      } else {
+        deferred.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      deferred.reject('Server communication error');
+    });
+  }
+
+  this.updateSettings = function(push, email, location){
+    var deferred = $q.defer();
+    $http({
+      method: 'GET',
+      url: '/update_settings',
+      params: {userid: $rootScope.userid, push: push, email: email, location_access: location}
+    }).then(function successCallback(response) {
+      if(response.data.status == 'OK'){
+        deferred.resolve('Successfully updated settings');
+        return response.data.settings;
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        deferred.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        deferred.reject('Invalid userid');
+      } else {
+        deferred.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      deferred.reject('Server communication error');
+    });
   }
 })
 

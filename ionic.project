@@ -13,6 +13,14 @@
   	{
   		"path": "/create_profile",
   		"proxyUrl": "http://www.don8don8.site/create_profile.php"
-  	}
+  	},
+    {
+      "path": "/get_settings",
+      "proxyUrl": "http://www.don8don8.site/settings.php"
+    },
+    {
+      "path": "/update_settings",
+      "proxyUrl": "http://www.don8don8.site/update_settings.php"
+    }
   ] 
 }

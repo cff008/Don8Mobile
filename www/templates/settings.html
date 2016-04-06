@@ -5,7 +5,7 @@
 		<ul class="list">
           <li class="item item-toggle">
             Push Notifications
-            <label class="toggle">
+            <label class="toggle" ng-model="data.pushNotifications" ng-change="updateSettings()">
               <input type="checkbox">
               <div class="track">
                 <div class="handle"></div>
@@ -13,7 +13,7 @@
             </label>
           </li>
           
-          <li class="item item-toggle">
+          <li class="item item-toggle" ng-model="data.emailNotifications" ng-change="updateSettings()">
             Email Notifications
             <label class="toggle">
               <input type="checkbox">
@@ -23,7 +23,7 @@
             </label>
           </li>
 
-          <li class="item item-toggle">
+          <li class="item item-toggle" ng-model="data.locationAccess" ng-change="updateSettings()">
             Location Access
             <label class="toggle">
               <input type="checkbox">

@@ -73,14 +73,23 @@ angular.module('app.controllers', [])
 	}
 	  ])
    
-.controller('settingsCtrl', function($scope) {
-  $scope.data = {};
+.controller('settingsCtrl', function($rootScope, $scope, SettingsService) {
 
-  //TODO: Add functions(s) to update settings based on user input
+  $scope.data = {};
+  SettingsService.getSettings(function(settingsData){
+    $scope.data.pushNotifications = settingsData.push;
+    $scope.data.emailNotifications = settingsData.email;
+    $scope.data.locationAccess = settingsData.location;
+  });
+
+  $scope.updateSettings = function() {
+    //call service to POST new settings to server
+    SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess);
+  }
 
 })
    
-.controller('loginCtrl', function($scope, LoginService, $ionicPopup, $state) {
+.controller('loginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state) {
 
 	//Login verifier
 	$scope.data = {};
@@ -88,7 +97,7 @@ angular.module('app.controllers', [])
     	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
         LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
-            console.log("Successful login");
+            console.log("Successful login.");
         }).error(function(data) {
           //TODO: do different things for invalid password and server errors
             var alertPopup = $ionicPopup.alert({
