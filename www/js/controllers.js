@@ -124,13 +124,16 @@ angular.module('app.controllers', [])
       $scope.data.pushNotifications = data.push;
       $scope.data.emailNotifications = data.email;
       $scope.data.locationAccess = data.location;
-      console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
+      //console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
     });
   }
 
   $scope.updateSettings = function() {
-    //call service to POST new settings to server
-    SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess);
+    SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess).success(function(data) {
+      console.log(data);
+    }).error(function(data) {
+      console.log("Unable to update settings on server." + data);
+    });
   }
 
   $scope.logout = function(){

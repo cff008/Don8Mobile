@@ -142,9 +142,7 @@ angular.module('app.services', [])
       params: {userid: $rootScope.userid, push: push, email: email, location_access: location}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
-        deferred.resolve(response.data.settings);
-        console.log("Settings updated on server");
-        //return response.data.settings;
+        deferred.resolve('Updated settings for user on server.');
       } else if(response.data.status == 'UNKNOWN_ERROR'){
         deferred.reject('Something went wrong. Please try again.')
       } else if(response.data.status == 'INVALID_REQUEST'){
