@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
     function ($scope, $state, dataService) {
       $scope.search = {};
 	  $scope.events = [];
-	  $scope.event = {}
+	  $scope.event = {};
 	  $scope.newEvents = [];
 	  $scope.index = 0;
 	  addFive = function(eventss,index){
