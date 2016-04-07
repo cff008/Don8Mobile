@@ -99,14 +99,17 @@ angular.module('app.services', [])
 .service('SettingsService', function($q, $http, $rootScope){
   this.getSettings = function(){
     var deferred = $q.defer();
+    var promise = deferred.promise;
+
     $http({
       method: 'GET',
       url: '/get_settings',
       params: {id: $rootScope.userid}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
-        deferred.resolve('Successfully attained stored settings');
-        return response.data.settings;
+        deferred.resolve(response.data.settings);
+        console.log("Settings retrieved from server");
+        //return response.data.settings;
       } else if(response.data.status == 'UNKNOWN_ERROR'){
         deferred.reject('Something went wrong. Please try again.')
       } else if(response.data.status == 'INVALID_REQUEST'){
@@ -117,18 +120,29 @@ angular.module('app.services', [])
     }, function errorCallback(response){
       deferred.reject('Server communication error');
     });
+
+    promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+    }
+    promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+    }
+    return promise;
   }
 
   this.updateSettings = function(push, email, location){
     var deferred = $q.defer();
+    var promise = deferred.promise;
+
     $http({
       method: 'GET',
       url: '/update_settings',
       params: {userid: $rootScope.userid, push: push, email: email, location_access: location}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
-        deferred.resolve('Successfully updated settings');
-        return response.data.settings;
+        deferred.resolve('Updated settings for user on server.');
       } else if(response.data.status == 'UNKNOWN_ERROR'){
         deferred.reject('Something went wrong. Please try again.')
       } else if(response.data.status == 'INVALID_REQUEST'){
@@ -139,8 +153,21 @@ angular.module('app.services', [])
     }, function errorCallback(response){
       deferred.reject('Server communication error');
     });
+
+    promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+    }
+    promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+    }
+    return promise;
+
   }
-}).service('LoginService', function($q, $http, $rootScope) {
+})
+
+.service('LoginService', function($q, $http, $rootScope) {
   return {
       loginUser: function(email, pw) {
           var deferred = $q.defer();
@@ -228,51 +255,6 @@ angular.module('app.services', [])
   }
 })
 
-.service('SettingsService', function($q, $http, $rootScope){
-  this.getSettings = function(){
-    var deferred = $q.defer();
-    $http({
-      method: 'GET',
-      url: '/get_settings',
-      params: {id: $rootScope.userid}
-    }).then(function successCallback(response) {
-      if(response.data.status == 'OK'){
-        deferred.resolve('Successfully attained stored settings');
-        return response.data.settings;
-      } else if(response.data.status == 'UNKNOWN_ERROR'){
-        deferred.reject('Something went wrong. Please try again.')
-      } else if(response.data.status == 'INVALID_REQUEST'){
-        deferred.reject('Invalid userid');
-      } else {
-        deferred.reject('This shouldn\'t happen.');
-      }
-    }, function errorCallback(response){
-      deferred.reject('Server communication error');
-    });
-  }
-
-  this.updateSettings = function(push, email, location){
-    var deferred = $q.defer();
-    $http({
-      method: 'GET',
-      url: '/update_settings',
-      params: {userid: $rootScope.userid, push: push, email: email, location_access: location}
-    }).then(function successCallback(response) {
-      if(response.data.status == 'OK'){
-        deferred.resolve('Successfully updated settings');
-        return response.data.settings;
-      } else if(response.data.status == 'UNKNOWN_ERROR'){
-        deferred.reject('Something went wrong. Please try again.')
-      } else if(response.data.status == 'INVALID_REQUEST'){
-        deferred.reject('Invalid userid');
-      } else {
-        deferred.reject('This shouldn\'t happen.');
-      }
-    }, function errorCallback(response){
-      deferred.reject('Server communication error');
-    });
-  }
-})
 .service('dataService', [ '$http', '$q',
     function ($http, $q) { return {
       getEvents: function(){
