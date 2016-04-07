@@ -176,7 +176,7 @@ angular.module('app.controllers', [])
   }
 })
    
-.controller('signupCtrl', function($scope, SignupService, $ionicPopup, $state) {
+.controller('signupCtrl', function($scope, $rootScope, SignupService, $ionicPopup, $state) {
   $scope.data = {};
 
     $scope.signup = function(){
@@ -184,6 +184,7 @@ angular.module('app.controllers', [])
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
         console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
+        $rootScope.userid = data.userid;
         var alertPopup = $ionicPopup.alert({
           title: 'Welcome to Don8!',
           template: 'Please fill out your user profile.'
