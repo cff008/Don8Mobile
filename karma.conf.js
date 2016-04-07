@@ -28,7 +28,7 @@ module.exports = function(config) {
 	   'www/index.html',
 	   'www/templates/*.html',
 
-	   'www/Test/spec/TestLogin.js'
+	   'www/Test/spec/*.js'
     ],
 
 
