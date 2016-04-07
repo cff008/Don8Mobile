@@ -16,7 +16,7 @@
   	},
   	{
   		"path": "/create_profile",
-  		"proxyUrl": "http://www.don8don8.site/data/create_profile.php"
+  		"proxyUrl": "http://www.don8don8.site/data/create_new_profile.php"
   	},
     {
       "path": "/get_settings",

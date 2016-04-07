@@ -4,19 +4,19 @@
 
 		<ul class="list">
           <li>
-            <ion-toggle ng-model="data.pushNotifications" ng-change="updateSettings()" ng-checked="data.pushNotifications">
+            <ion-toggle ng-model="data.pushNotifications" ng-change="updateSettings()" ng-checked="(data.pushNotifications == 1)?true:false">
               Push Notifications
             </ion-toggle>
           </li>
           
           <li>
-            <ion-toggle ng-model="data.emailNotifications" ng-change="updateSettings()" ng-checked="data.emailNotifications">
+            <ion-toggle ng-model="data.emailNotifications" ng-change="updateSettings()" ng-checked="(data.emailNotifications == 1)?true:false;">
               Email Notifications
             </ion-toggle>
           </li>
 
           <li>
-            <ion-toggle ng-model="data.locationAccess" ng-change="updateSettings()" ng-checked="data.locationAccess">
+            <ion-toggle ng-model="data.locationAccess" ng-change="updateSettings()" ng-checked="(data.locationAccess == 1)?true:false;">
              Location Access
             </ion-toggle>
           </li>

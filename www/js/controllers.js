@@ -32,7 +32,7 @@ angular.module('app.controllers', [])
     function ($scope, $state, dataService) {
       $scope.search = {};
 	  $scope.events = [];
-	  $scope.event = {}
+	  $scope.event = {};
 	  $scope.newEvents = [];
 	  $scope.index = 0;
 	  addFive = function(eventss,index){
@@ -135,7 +135,7 @@ angular.module('app.controllers', [])
 	}
 	  ])
    
-.controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state) {
+.controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state, $ionicPopup) {
 
   $scope.data = {};
 
@@ -145,14 +145,16 @@ angular.module('app.controllers', [])
       $scope.data.pushNotifications = data.push;
       $scope.data.emailNotifications = data.email;
       $scope.data.locationAccess = data.location;
-      console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
-      //$scope.$digest();
+      //console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
     });
   }
 
   $scope.updateSettings = function() {
-    //call service to POST new settings to server
-    SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess);
+    SettingsService.updateSettings($scope.data.pushNotifications, $scope.data.emailNotifications, $scope.data.locationAccess).success(function(data) {
+      console.log(data);
+    }).error(function(data) {
+      console.log("Unable to update settings on server." + data);
+    });
   }
 
   $scope.logout = function(){
@@ -169,6 +171,7 @@ angular.module('app.controllers', [])
 	//Login verifier
 	$scope.data = {};
     $scope.login = function() {
+
     	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
         LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
@@ -194,7 +197,7 @@ angular.module('app.controllers', [])
   }
 })
    
-.controller('signupCtrl', function($scope, SignupService, $ionicPopup, $state) {
+.controller('signupCtrl', function($scope, $rootScope, SignupService, $ionicPopup, $state) {
   $scope.data = {};
 
     $scope.signup = function(){
@@ -202,6 +205,7 @@ angular.module('app.controllers', [])
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
         console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
+        $rootScope.userid = data.userid;
         var alertPopup = $ionicPopup.alert({
           title: 'Welcome to Don8!',
           template: 'Please fill out your user profile.'
@@ -231,8 +235,10 @@ angular.module('app.controllers', [])
 	  $scope.event;
 	  var i = 0,
 	  id = $stateParams.id;
+	  $scope.added = false;
 	  console.log($stateParams);	
       $scope.loading = true;
+	  $scope.buttonText = "Signup for Event";
 	  dataService.getEvent(id).then(function(events){
 		$scope.event = events;
       }).finally(function () {
@@ -250,6 +256,13 @@ angular.module('app.controllers', [])
       });
       };
 
+	  $scope.addEvent = function() {
+			//dataService.addUserToEvent(userid, id).then(
+				$scope.added = true;
+				$scope.buttonText = "Thanks for volunteering!!!"
+			//)
+	  };
+	  
       $scope.call = function () {
         $window.open('tel:' + $scope.event.contact.tel, '_system');
       };

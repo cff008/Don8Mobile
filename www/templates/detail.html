@@ -16,8 +16,8 @@
 
 	  <ion-list>
 		<ion-item>
-		<button class="button button-block">
-			Signup for Event
+		<button class="button button-block"  ng-click="addEvent()" ng-disable="{{added}}">
+			{{buttonText}}
 		</button>
 		</ion item>
 	  </ion-list>

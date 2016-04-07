@@ -1,6 +1,6 @@
 <ion-view title="Login">
     <ion-content style="background: url(img/background.jpg) no-repeat center;" padding="true" class="has-header">
-        <form class="list">
+        <form class="list" name="loginForm">
 
             <ion-list>
 
@@ -10,21 +10,29 @@
 
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="text" placeholder="name@example.com" name="emailAddress" ng-model="data.email">
-                    <!-- <span ng-show="loginForm.emailAddress.$error.email">Invalid Email</span> -->
+                    <input type="email" placeholder="name@example.com" name="emailAddress" ng-model="data.email" required>
+                    <span style="color:red">
+                        <span ng-show="(loginForm.emailAddress.$error.required || loginForm.emailAddress.$invalid) && loginForm.emailAddress.$dirty">!</span>
+                    </span>
                 </label>
                 
                 <label class="item item-input">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="password" ng-model="data.password">
+                    <input type="password" placeholder="password" name="password" ng-model="data.password" required>
+                    <span style="color:red">
+                        <span ng-show="loginForm.password.$error.required && loginForm.password.$dirty">!</span>
+                    </span>
                 </label>
 
             </ion-list>
+
+
             <div class="spacer" style="height: 40px;"></div>
-            <button id="login-button1" class="button button-stable  button-block" ng-click="login()">Log in</button>
+            <button id="login-button1" class="button button-stable  button-block" ng-disabled="loginForm.$invalid" ng-click="login()">Log in</button>
             <a ui-sref="signup" id="login-button2" class="button button-positive  button-block button-clear">Create an account</a>
             <!-- TODO: Fix the ui-sref for the forgot-password-link once a page is created! -->
             <!--<a ui-sref="forgotpassword" id="forgot-password-link" class="button button-positive button-block button-clear">Forgot Password</a> -->
         </form>
+
     </ion-content>
 </ion-view>
