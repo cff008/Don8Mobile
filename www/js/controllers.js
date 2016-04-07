@@ -114,7 +114,7 @@ angular.module('app.controllers', [])
 	}
 	  ])
    
-.controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state) {
+.controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state, $ionicPopup) {
 
   $scope.data = {};
 
@@ -125,7 +125,6 @@ angular.module('app.controllers', [])
       $scope.data.emailNotifications = data.email;
       $scope.data.locationAccess = data.location;
       console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
-      //$scope.$digest();
     });
   }
 
