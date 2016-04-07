@@ -2,7 +2,7 @@
     <ion-content overflow-scroll="true" padding="false" style="background: url(img/background.jpg) no-repeat center;" class="has-header">
         <div class="spacer" style="width: 300px; height: 43px;"></div>
         <div style="text-align:center;">
-            <img src="img/BenLiblit.jpg" width="30%" height="auto">
+            <img src={{data.photo}} width="30%" height="auto">
         </div>
         <p align="center">
         <button id="editProfile-button2"style="font-size:-6px;" class="button button-calm button-small icon-right ion-android-folder-open" align="center">Change Profile Picture</button>
@@ -12,32 +12,33 @@
                  <div class="spacer" style="width: 300px; height: 15px;"></div>
         <label class="item item-input">
                 <span class="input-label">Name: </span>
-                <input type="text" placeholder="Ben Liblit">
+                <input type="text">
         </label>
                  <label class="item item-input">
                  <span class="input-label">Email: </span>
-                 <input type="text" placeholder="bliblit@cs.wisc.edu">
+                 <input type="text">
          </label>
                  <label class="item item-input">
                  <span class="input-label">Phone Number: </span>
-                 <input type="text" placeholder="608-600-0011">
+                 <input type="text">
         </label>
         <div class="spacer" style="width: 300px; height: 15px;"></div>
             <font color="#FFFFFF">
                  <font size="5">Interests:</font>
-                 <div class="spacer" style="width: 300px; height: 15px;"></div>
-                 <label class="item item-input">
-                 <span class="input-label">Interest 1. </span>
-                 <input type="text" placeholder="Economic Development">  
-        </label>
-                 <label class="item item-input">
-                 <span class="input-label">Interest 2. </span>
-                 <input type="text" placeholder="After School Programs">  
-        </label>
-                 <label class="item item-input">
-                 <span class="input-label">Interest 3. </span>
-                 <input type="text" placeholder="Nature Conservation">
-        </label>
+        <form action="">
+        <input type="checkbox" name="Interest" value="Bike"> Advocacy<br>
+        <input type="checkbox" name="Interest" value="Car"> Board Service<br>
+        <input type="checkbox" name="Interest" value="Car"> Clerical<br>
+        <input type="checkbox" name="Interest" value="Car"> Education<br>
+        <input type="checkbox" name="Interest" value="Car"> Finance<br>
+        <input type="checkbox" name="Interest" value="Car"> Food<br> 
+        <input type="checkbox" name="Interest" value="Car"> Medical<br> 
+        <input type="checkbox" name="Interest" value="Car"> Seniors<br>
+        <input type="checkbox" name="Interest" value="Car"> Disabled<br>
+        <input type="checkbox" name="Interest" value="Car"> Physical Labor<br>  
+        <input type="checkbox" name="Interest" value="Car"> Technology<br>
+        <input type="checkbox" name="Interest" value="Car"> Youth<br>   
+        </form>
         <div class="spacer" style="width: 300px; height: 10px;"></div>
         <p align="center">
         <button id="AddInterests"style="font-size:-6px;" class="button button-calm button-small " align="center">Add Interest

@@ -54,6 +54,57 @@ angular.module('app.services', [])
   }
 })
 
+.service('profileService', function($q, $http, $rootScope) {
+  this.getProfile = function(){
+    var deferred = $q.defer();
+    var promise = $http({
+      method: 'GET',
+      url: '/profile',
+      params: {id: $rootScope.userid}
+    }).then(function successCallback(response) {
+      if(response.data.status == 'OK'){
+        deferred.resolve('Welcome to Don8');
+        return response.data.user;
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        deferred.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        deferred.reject('Invalid userid');
+      } else {
+        deferred.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      deferred.reject('Server communication error');
+    });
+    return promise;
+  }
+})
+
+  // this.updateProfile = function(name, email, phone){
+  //   var deferred = $q.defer();
+  //   $http({
+  //     method: 'GET',
+  //     url: '/update_profile',
+  //     params: {userid: $rootScope.userid, name: data.firstname, email: data.email, phone: data.phone}
+  //   }).then(function successCallback(response) {
+  //     if(response.data.status == 'OK'){
+  //       deferred.resolve('Successfully updated settings');
+  //       return response.data.settings;
+  //     } else if(response.data.status == 'UNKNOWN_ERROR'){
+  //       deferred.reject('Something went wrong. Please try again.')
+  //     } else if(response.data.status == 'INVALID_REQUEST'){
+  //       deferred.reject('Invalid userid');
+  //     } else {
+  //       deferred.reject('This shouldn\'t happen.');
+  //     }
+  //   }, function errorCallback(response){
+  //     deferred.reject('Server communication error');
+  //   });
+  //   return promise;
+  // }
+
+
+
+
 .service('SignupService', function($q, $http, $rootScope) {
   return{
     signupUser: function(firstname, lastname, email, password) {
@@ -143,7 +194,8 @@ angular.module('app.services', [])
       deferred.reject('Server communication error');
     });
   }
-}).service('LoginService', function($q, $http, $rootScope) {
+})
+.service('LoginService', function($q, $http, $rootScope) {
   return {
       loginUser: function(email, pw) {
           var deferred = $q.defer();

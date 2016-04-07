@@ -1,8 +1,29 @@
 angular.module('app.controllers', [])
      
-.controller('myProfileCtrl', function($scope) {
+.controller('myProfileCtrl', [
+  '$scope',
+  '$rootScope',  
+  'profileService',
+  function($scope, $rootScope, profileService) {
+    var id = $rootScope.userid;
+    $scope.data = {};
+    $scope.getProfile = function() { 
+    profileService.getProfile(id).then(function(data){
+      $scope.data.firstname = data.firstname;
+      $scope.data.lastname = data.lastname;
+      $scope.data.email = data.email;
+      $scope.data.phone = data.phone;
+      $scope.data.photo = data.photo;
+      $scope.data.city = data.city;
+      $scope.data.state = data.state; 
+      });
+    
+    }
+    $scope.getProfile();
 
-})
+  }
+  ])
+
    
 .controller('eventFeedCtrl', [
     '$scope',

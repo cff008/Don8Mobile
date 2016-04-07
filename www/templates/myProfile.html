@@ -7,13 +7,13 @@
         <ion-list>
             <ion-item class="item-thumbnail-center">
             <div style="text-align:center;">
-                <img <img style="border:5px double #000080;" src="img/BenLiblit.jpg" width="40%" height="auto">
+                <img <img style="border:5px double #000080;" src={{data.photo}} width="40%" height="auto">
             </div> 
             <div style="text-align:center;">   
-                <h2>Ben Liblit</h2>
-                <p>bliblit@cs.wisc.edu</p>
-                <p>608-600-0011</p>
-                <p>Madison, WI</p>
+                <h2>{{data.firstname}} {{data.lastname}}</h2>
+                <p>{{data.email}}</p>
+                <p>{{data.phone}}</p>
+                <p>{{data.city}}, {{data.state}}</p>
             </div>
             </ion-item>
         </ion-list>
@@ -28,9 +28,9 @@
             </p>
         </div>
         <ion-list>
-            <ion-item>Economic Development</ion-item>
-            <ion-item>After School Programs</ion-item>
-            <ion-item>Nature Conservation</ion-item>
+            <ion-item>Advocacy</ion-item>
+            <ion-item>Youth</ion-item>
+            <ion-item>Physical Labor</ion-item>
         </ion-list>
         <div class="spacer" style="width: 300px; height: 8px;"></div>
         <div>

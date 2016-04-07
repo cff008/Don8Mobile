@@ -25,7 +25,16 @@
     {
       "path": "/update_settings",
       "proxyUrl": "http://www.don8don8.site/data/update_settings.php"
+    },
+    {
+    "path": "/profile",
+    "proxyUrl": "http://don8don8.site/data/displayprofile.php"
+    },
+    {
+    "path": "/update_profile",
+    "proxyUrl": "http://don8don8.site/data/update_profile.php"
     }
+
   ] 
 }
 
