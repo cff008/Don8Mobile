@@ -213,8 +213,10 @@ angular.module('app.controllers', [])
 	  $scope.event;
 	  var i = 0,
 	  id = $stateParams.id;
+	  $scope.added = false;
 	  console.log($stateParams);	
       $scope.loading = true;
+	  $scope.buttonText = "Signup for Event";
 	  dataService.getEvent(id).then(function(events){
 		$scope.event = events;
       }).finally(function () {
@@ -232,6 +234,13 @@ angular.module('app.controllers', [])
       });
       };
 
+	  $scope.addEvent = function() {
+			//dataService.addUserToEvent(userid, id).then(
+				$scope.added = true;
+				$scope.buttonText = "Thanks for volunteering!!!"
+			//)
+	  };
+	  
       $scope.call = function () {
         $window.open('tel:' + $scope.event.contact.tel, '_system');
       };
