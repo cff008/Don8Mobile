@@ -150,6 +150,7 @@ angular.module('app.controllers', [])
 	//Login verifier
 	$scope.data = {};
     $scope.login = function() {
+
     	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
         LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
             $state.go('tabsController.myProfile');
