@@ -79,29 +79,71 @@ angular.module('app.services', [])
   }
 })
 
-  // this.updateProfile = function(name, email, phone){
-  //   var deferred = $q.defer();
-  //   $http({
-  //     method: 'GET',
-  //     url: '/update_profile',
-  //     params: {userid: $rootScope.userid, name: data.firstname, email: data.email, phone: data.phone}
-  //   }).then(function successCallback(response) {
-  //     if(response.data.status == 'OK'){
-  //       deferred.resolve('Successfully updated settings');
-  //       return response.data.settings;
-  //     } else if(response.data.status == 'UNKNOWN_ERROR'){
-  //       deferred.reject('Something went wrong. Please try again.')
-  //     } else if(response.data.status == 'INVALID_REQUEST'){
-  //       deferred.reject('Invalid userid');
-  //     } else {
-  //       deferred.reject('This shouldn\'t happen.');
-  //     }
-  //   }, function errorCallback(response){
-  //     deferred.reject('Server communication error');
-  //   });
-  //   return promise;
-  // }
+.service('editProfileService', function($q, $http, $rootScope) {
+  return{
+    editProfile: function(firstname, lastname, email, interests) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
 
+      $http({
+        method: 'GET',
+        url: '/update_profile',
+        params: {firstname: firstname, lastname: lastname, email: email, interests: interests}
+      }).then(function successCallback(response) {
+        //this callback will be called asynchronously when the response is available
+        if(response.data.status == 'OK'){
+          deferred.resolve('Changes Made');
+          $rootScope.userid = response.data.userid;
+        } else if(response.data.status == 'UNKNOWN_ERROR') {
+          deferred.reject('Something went wrong. Please try again.');
+        } else if(response.data.status == 'INVALID_REQUEST'){
+          deferred.reject('Bad Input');
+        } else {
+          deferred.reject('This shouldn\'t happen');
+        }
+
+        //TODO: Add cases for: username/email already exists, etc.
+      }, function errorCallback(response) {
+        //called asynchronously if an error occurs or the server returns response with an error status
+        deferred.reject('Server communication error');
+      });
+
+      promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+      }
+      promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+      }
+      return promise;
+    }
+  }
+})
+// .service('editProfileService', function($q, $http, $rootScope) {
+//   this.editProfile = function(){
+//     var deferred = $q.defer();
+//     var promise = $http({
+//       method: 'GET',
+//       url: '/update_profile',
+//       params: {firstname: data.firstname, lastname: data.lastname, email: data.email, phone: data.phone, interests: interests}
+//     }).then(function successCallback(response) {
+//       if(response.data.status == 'OK'){
+//         deferred.resolve('Welcome to Don8');
+//         return response.data.user;
+//       } else if(response.data.status == 'UNKNOWN_ERROR'){
+//         deferred.reject('Something went wrong. Please try again.')
+//       } else if(response.data.status == 'INVALID_REQUEST'){
+//         deferred.reject('Invalid userid');
+//       } else {
+//         deferred.reject('This shouldn\'t happen.');
+//       }
+//     }, function errorCallback(response){
+//       deferred.reject('Server communication error');
+//     });
+//     return promise;
+//   }
+// });
 
 
 

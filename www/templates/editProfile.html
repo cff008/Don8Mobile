@@ -11,17 +11,26 @@
                  <font size="5">Personal Information:</font>
                  <div class="spacer" style="width: 300px; height: 15px;"></div>
         <label class="item item-input">
-                <span class="input-label">Name: </span>
-                <input type="text">
-        </label>
-                 <label class="item item-input">
-                 <span class="input-label">Email: </span>
-                 <input type="text">
-         </label>
-                 <label class="item item-input">
-                 <span class="input-label">Phone Number: </span>
-                 <input type="text">
-        </label>
+                    <span class="input-label">First Name</span>
+                    <input type="text" placeholder="First Name" ng-model="data.firstname" name="firstname" required>
+                    <span style="color:red">
+                        <span ng-show="editProfile.firstname.$error.required && editProfile.firstname.$dirty">!</span>
+                    </span>
+                </label>
+                <label class ="item item-input">
+                    <span class="input-label">Last Name</span>
+                    <input type="text" placeholder="Last Name" ng-model="data.lastname" name="lastname" required>
+                    <span style="color:red">
+                        <span ng-show="editProfle.lastname.$error.required && editProfile.lastname.$dirty">!</span>
+                    </span>
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="name@example.com" ng-model="data.email" name="email" required>
+                    <span style="color:red">
+                        <span ng-show="(editProfile.email.$error.required || editProfile.email.$invalid) && editProfile.email.$dirty">!</span>
+                    </span>
+                </label>
         <div class="spacer" style="width: 300px; height: 15px;"></div>
             <font color="#FFFFFF">
                  <font size="5">Interests:</font>
@@ -41,8 +50,7 @@
         </form>
         <div class="spacer" style="width: 300px; height: 10px;"></div>
         <p align="center">
-        <button id="AddInterests"style="font-size:-6px;" class="button button-calm button-small " align="center">Add Interest
-        </button>
+        <a id="Update" class="button button-stable  button-block" ng-click="editProfile()">Update</a>
         </p>                     
     </ion-content>
 </ion-view>

@@ -15,12 +15,30 @@ angular.module('app.controllers', [])
       $scope.data.phone = data.phone;
       $scope.data.photo = data.photo;
       $scope.data.city = data.city;
-      $scope.data.state = data.state; 
+      $scope.data.state = data.state;
+
       });
     
     }
     $scope.getProfile();
+  }
+  ])
+  
 
+.controller('editProfile', [
+  '$scope',
+  '$rootScope',
+  '$editProfileService',
+  function($scope, $rootScope, $editProfileService) {
+    $scope.data = {};
+    $scope.editProfile = function() {
+    editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
+     $scope.data.email, $scope.data.interests).then(function(data) {
+        
+    }).error(function(data) {
+      console.log("Unable to update settings on server." + data);
+    });
+  }
   }
   ])
 
