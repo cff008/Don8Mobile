@@ -1,9 +1,48 @@
 angular.module('app.controllers', [])
+     
+.controller('myProfileCtrl', [
+  '$scope',
+  '$rootScope',  
+  'profileService',
+  function($scope, $rootScope, profileService) {
+    var id = $rootScope.userid;
+    $scope.data = {};
+    $scope.getProfile = function() { 
+    profileService.getProfile(id).then(function(data){
+      $scope.data.firstname = data.firstname;
+      $scope.data.lastname = data.lastname;
+      $scope.data.email = data.email;
+      $scope.data.phone = data.phone;
+      $scope.data.photo = data.photo;
+      $scope.data.city = data.city;
+      $scope.data.state = data.state;
+
+      });
+    
+    }
+    $scope.getProfile();
+  }
+  ])
+  
+
+.controller('editProfile', [
+  '$scope',
+  '$rootScope',
+  '$editProfileService',
+  function($scope, $rootScope, $editProfileService) {
+    $scope.data = {};
+    $scope.editProfile = function() {
+    editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
+     $scope.data.email, $scope.data.interests).then(function(data) {
+        
+    }).error(function(data) {
+      console.log("Unable to update settings on server." + data);
+    });
+  }
+  }
+  ])
 
 
-.controller('myProfileCtrl', function($scope) {
-
-})
    
 .controller('eventFeedCtrl', [
     '$scope',
@@ -190,7 +229,7 @@ angular.module('app.controllers', [])
   }
 })
    
-.controller('signupCtrl', function($scope, SignupService, $ionicPopup, $state) {
+.controller('signupCtrl', function($scope, $rootScope, SignupService, $ionicPopup, $state) {
   $scope.data = {};
 
     $scope.signup = function(){
@@ -198,6 +237,7 @@ angular.module('app.controllers', [])
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
         console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
+        $rootScope.userid = data.userid;
         var alertPopup = $ionicPopup.alert({
           title: 'Welcome to Don8!',
           template: 'Please fill out your user profile.'
