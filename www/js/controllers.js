@@ -1,5 +1,6 @@
 angular.module('app.controllers', [])
-     
+
+
 .controller('myProfileCtrl', function($scope) {
 
 })
@@ -74,26 +75,39 @@ angular.module('app.controllers', [])
     '$scope',
     '$state',
     'dataService',
-    function ($scope, $state, dataService) {
+	'$rootScope',
+    function ($scope, $state, dataService, $rootScope) {
 		$scope.events = [];
 		$scope.newEvents = [];
 		$scope.index = 0;
      
-      $scope.loadNext = function () {
+	 addFive = function(eventss,index){
+		var tempevents = [], i = index;
+		for (i; i < eventss.length; i = i + 1) {
+            if(i == index+5){
+				break;
+			}
+         tempevents.push(eventss[i]);
+		}
+		return tempevents;
+		};
+      
+	  
+	  $scope.loadNext = function () {
 		if($scope.events.length == 0){
-		dataService.getMyEvents().then(function(events){
+		dataService.getMyEvents($rootScope.userid).then(function(events){
 			$scope.newEvents = events;
 			// .then(function (events) {
 			  
 			  
 			  if($scope.newEvents != $scope.events){
-			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
-			  $scope.index += $scope.newEvents.length;
+			  $scope.events = $scope.newEvents;
 			  }
 			  $scope.$broadcast('scroll.infiniteScrollComplete');
 			
 		// .finally(function () 
 			});
+			 $scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 		else{
 			if($scope.newEvents != $scope.events){
@@ -209,8 +223,9 @@ angular.module('app.controllers', [])
     '$window',
     '$ionicPopup',
     'dataService',
-    function ($scope, $stateParams, $window, $ionicPopup, dataService) {
-	  $scope.event;
+	'$timeout',
+    function ($scope, $stateParams, $window, $ionicPopup, dataService, $timeout) {
+	  $scope.event = {name: '', city: '', district: '', image: '', street: '', number: '', zip: '', city: '', description: '', date: '', contact_name: '', contact_phone: '', contact_first: '', contact_last: '', website: '', state: ''};
 	  var i = 0,
 	  id = $stateParams.id;
 	  $scope.added = false;
@@ -218,10 +233,11 @@ angular.module('app.controllers', [])
       $scope.loading = true;
 	  $scope.buttonText = "Signup for Event";
 	  dataService.getEvent(id).then(function(events){
-		$scope.event = events;
+	  $scope.event = events;
+		$timeout(function(){$scope.$apply($scope.event);});
+		console.log($scope.event);
       }).finally(function () {
-        $scope.loading = false;
-		$scope.apply
+		$scope.loading = false
       });
 
       $scope.reload = function () {
@@ -230,7 +246,6 @@ angular.module('app.controllers', [])
 		$scope.event = events;
       }).finally(function () {
         $scope.loading = false;
-		$scope.apply
       });
       };
 
