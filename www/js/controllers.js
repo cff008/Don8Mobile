@@ -36,6 +36,8 @@ angular.module('app.controllers', [])
       $scope.data.photo = data.photo;
       $scope.data.city = data.city;
       $scope.data.state = data.state;
+      $scope.data.interests = data.interests;
+      $scope.data.organizations = data.organizations;
       var tempinterests = []; 
       var temporganizations = [];
       for(i = 0; i < data.interests.length; i = i + 1){
