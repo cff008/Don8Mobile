@@ -367,7 +367,7 @@ angular.module('app.services', [])
 	getEvent: function(id){
 		return $http({
       method: 'GET',
-      url: '/event',
+      url: '/events/all',
       params: {id: id}
     }).then(function successCallback(response) {
 		if(response.data.status == 'OK'){

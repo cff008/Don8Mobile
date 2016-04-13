@@ -1,7 +1,22 @@
 angular.module('app.controllers', [])
    
+.controller('cameraCtrl', function ($scope, $cordovaCamera) {
+   $scope.getPicture = function() {
+    var options = {
+        quality: 75,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        encodingType: Camera.EncodingType.JPEG,
+        popoverOptions: CameraPopoverOptions
+   };
 
-
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+    $scope.imgURI =  imageData;
+   }, function (err) {
+       console.log("err accessing photo library", err)
+  });
+}
+})
 
 .controller('myProfileCtrl', [
   '$scope',
@@ -11,6 +26,7 @@ angular.module('app.controllers', [])
     var id = $rootScope.userid;
     $scope.data = {};
     $scope.interests = [];
+    $scope.organizations = [];
     $scope.getProfile = function() { 
     profileService.getProfile(id).then(function(data){
       $scope.data.firstname = data.firstname;
@@ -21,14 +37,16 @@ angular.module('app.controllers', [])
       $scope.data.city = data.city;
       $scope.data.state = data.state;
       var tempinterests = []; 
+      var temporganizations = [];
       for(i = 0; i < data.interests.length; i = i + 1){
          tempinterests.push(interests[i]);
          }
       return tempinterests;
+      for(i = 0; i < data.organizations.length; i = i + 1){
+         temporganizations.push(organizations[i]);
+      }
+      return temporganizations;
     });
-
-    
-    
     }
     $scope.getProfile();
   }

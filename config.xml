@@ -12,6 +12,13 @@
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
+    <gap:plugin name="org.apache.cordova.camera"/>
+    <gap:plugin name="org.apache.cordova.media-capture"/>
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera"/>
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher"/>
+  </feature>
     
     <!-- Ionic supports Android Jellybean and up --> 
     <preference name="android-minSdkVersion" value="16" />
