@@ -31,26 +31,74 @@
                         <span ng-show="(editProfile.email.$error.required || editProfile.email.$invalid) && editProfile.email.$dirty">!</span>
                     </span>
                 </label>
-        <div class="spacer" style="width: 300px; height: 15px;"></div>
+
+  <div class="spacer" style="width: 300px; height: 15px;"></div>
             <font color="#FFFFFF">
                  <font size="5">Interests:</font>
-        <form action="">
-        <input type="checkbox" name="Interest" value="Bike"> Advocacy<br>
-        <input type="checkbox" name="Interest" value="Car"> Board Service<br>
-        <input type="checkbox" name="Interest" value="Car"> Clerical<br>
-        <input type="checkbox" name="Interest" value="Car"> Education<br>
-        <input type="checkbox" name="Interest" value="Car"> Finance<br>
-        <input type="checkbox" name="Interest" value="Car"> Food<br> 
-        <input type="checkbox" name="Interest" value="Car"> Medical<br> 
-        <input type="checkbox" name="Interest" value="Car"> Seniors<br>
-        <input type="checkbox" name="Interest" value="Car"> Disabled<br>
-        <input type="checkbox" name="Interest" value="Car"> Physical Labor<br>  
-        <input type="checkbox" name="Interest" value="Car"> Technology<br>
-        <input type="checkbox" name="Interest" value="Car"> Youth<br>   
-        </form>
-        <div class="spacer" style="width: 300px; height: 10px;"></div>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Advocacy</ion-label>
+      <ion-checkbox checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Board Service</ion-label>
+      <ion-checkbox dark checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Clerical</ion-label>
+      <ion-checkbox value="cherry" disabled="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Education</ion-label>
+      <ion-checkbox secondary></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Finance</ion-label>
+      <ion-checkbox danger checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Food</ion-label>
+      <ion-checkbox></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Medical</ion-label>
+      <ion-checkbox energized checked="true" dark></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Seniors</ion-label>
+      <ion-checkbox royal checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled</ion-label>
+      <ion-checkbox disabled="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Physical Labor</ion-label>
+      <ion-checkbox dark checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Technology</ion-label>
+      <ion-checkbox secondary checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Youth</ion-label>
+      <ion-checkbox royal></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <div class="spacer" style="width: 300px; height: 10px;"></div>
         <p align="center">
         <a id="Update" class="button button-stable  button-block" ng-click="editProfile()">Update</a>
-        </p>                     
-    </ion-content>
-</ion-view>
+        </p> 
+</ion-content>

@@ -2,22 +2,22 @@
   "name": "Don8",
   "app_id": "2ff3c64c",
   "proxies": [
-  	{
-  		"path": "/events/all",
-  		"proxyUrl": "http://don8don8.site/data/events.php"
-  	},
-	{
-  		"path": "/event",
-  		"proxyUrl": "http://don8don8.site/data/events.php"
-  	},
-  	{
-  		"path": "/login",
-  		"proxyUrl": "http://www.don8don8.site/data/login.php"
-  	},
-  	{
-  		"path": "/create_profile",
-  		"proxyUrl": "http://www.don8don8.site/data/create_new_profile.php"
-  	},
+    {
+      "path": "/events/all",
+      "proxyUrl": "http://don8don8.site/data/events.php"
+    },
+    {
+      "path": "/event",
+      "proxyUrl": "http://don8don8.site/data/events.php"
+    },
+    {
+      "path": "/login",
+      "proxyUrl": "http://www.don8don8.site/data/login.php"
+    },
+    {
+      "path": "/create_profile",
+      "proxyUrl": "http://www.don8don8.site/data/create_new_profile.php"
+    },
     {
       "path": "/get_settings",
       "proxyUrl": "http://www.don8don8.site/data/settings.php"
@@ -27,14 +27,12 @@
       "proxyUrl": "http://www.don8don8.site/data/update_settings.php"
     },
     {
-    "path": "/profile",
-    "proxyUrl": "http://don8don8.site/data/displayprofile.php"
+      "path": "/profile",
+      "proxyUrl": "http://don8don8.site/data/displayprofile.php"
     },
     {
-    "path": "/update_profile",
-    "proxyUrl": "http://don8don8.site/data/update_profile.php"
+      "path": "/update_profile",
+      "proxyUrl": "http://don8don8.site/data/update_profile.php"
     }
-
-  ] 
+  ]
 }
-

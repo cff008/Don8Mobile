@@ -1,5 +1,8 @@
 angular.module('app.controllers', [])
-     
+   
+
+
+
 .controller('myProfileCtrl', [
   '$scope',
   '$rootScope',  
@@ -7,6 +10,7 @@ angular.module('app.controllers', [])
   function($scope, $rootScope, profileService) {
     var id = $rootScope.userid;
     $scope.data = {};
+    $scope.interests = [];
     $scope.getProfile = function() { 
     profileService.getProfile(id).then(function(data){
       $scope.data.firstname = data.firstname;
@@ -16,8 +20,14 @@ angular.module('app.controllers', [])
       $scope.data.photo = data.photo;
       $scope.data.city = data.city;
       $scope.data.state = data.state;
+      var tempinterests = []; 
+      for(i = 0; i < data.interests.length; i = i + 1){
+         tempinterests.push(interests[i]);
+         }
+      return tempinterests;
+    });
 
-      });
+    
     
     }
     $scope.getProfile();
