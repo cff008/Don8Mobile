@@ -207,6 +207,7 @@ angular.module('app.controllers', [])
       $scope.data.pushNotifications = data.push;
       $scope.data.emailNotifications = data.email;
       $scope.data.locationAccess = data.location;
+      $scope.data.anonymous = data.anonymous;
       //console.log("push: " + $scope.data.pushNotifications + " email: " + $scope.data.emailNotifications + " location: " + $scope.data.locationAccess);
     });
   }
