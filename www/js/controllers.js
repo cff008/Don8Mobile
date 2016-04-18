@@ -41,9 +41,9 @@ angular.module('app.controllers', [])
       var tempinterests = []; 
       var temporganizations = [];
       for(i = 0; i < data.interests.length; i = i + 1){
-         tempinterests.push(interests[i]);
+         return data.interests[i];
          }
-      return tempinterests;
+      
       for(i = 0; i < data.organizations.length; i = i + 1){
          temporganizations.push(organizations[i]);
       }
@@ -61,6 +61,7 @@ angular.module('app.controllers', [])
   '$editProfileService',
   function($scope, $rootScope, $editProfileService) {
     $scope.data = {};
+    var updateInterests = [];
     $scope.editProfile = function() {
     editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
      $scope.data.email, $scope.data.interests).then(function(data) {
