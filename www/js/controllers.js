@@ -90,6 +90,7 @@ angular.module('app.controllers', [])
             if(i == index+5){
 				break;
 			}
+			index++;
          tempevents.push(eventss[i]);
 		}
 		return tempevents;
@@ -164,6 +165,7 @@ angular.module('app.controllers', [])
 	  
 	  $scope.loadNext = function () {
 		if($scope.events.length == 0){
+		if($rootScope.userid == null){
 		dataService.getMyEvents($rootScope.userid).then(function(events){
 			$scope.newEvents = events;
 			// .then(function (events) {
@@ -177,6 +179,9 @@ angular.module('app.controllers', [])
 		// .finally(function () 
 			});
 			 $scope.$broadcast('scroll.infiniteScrollComplete');
+		}
+			$scope.events = [];
+			
 		}
 		else{
 			if($scope.newEvents != $scope.events){
