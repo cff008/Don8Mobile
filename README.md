@@ -1,7 +1,7 @@
 Ionic App - Don8 Mobile App
 =====================
 
-This is a guide to testing the app in your browser
+This is a guide to two different options for testing the app.
 
 ## Using Ionic View
 
