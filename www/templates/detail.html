@@ -11,7 +11,7 @@
       <br>
 
       <div class="text-center">
-        <img ng-src="{{event.image}}" class="image">
+        <img ng-src="{{event.photo}}" class="image">
       </div>
 
 	  <ion-list>
@@ -24,8 +24,8 @@
       <ion-list>
         <ion-item class="item-divider item-icon-right"><b>Address</b> <i class="icon ion-location"></i></ion-item>
         <ion-item>
-          {{event.street}} {{event.number}}<br>
-          {{event.zip}} {{event.city}}
+         {{event.number}} {{event.street}}<br>
+         {{event.city}}, {{event.zip}} 
         </ion-item>
       </ion-list>
 	  <b> Description</b>
