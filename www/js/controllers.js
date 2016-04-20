@@ -15,6 +15,7 @@ angular.module('app.controllers', [])
    }, function (err) {
        console.log("err accessing photo library", err)
   });
+  
 }
 })
 
@@ -166,7 +167,7 @@ angular.module('app.controllers', [])
 	  
 	  $scope.loadNext = function () {
 		if($scope.events.length == 0){
-		if($rootScope.userid == null){
+		if($rootScope.userid != null){
 		dataService.getMyEvents($rootScope.userid).then(function(events){
 			$scope.newEvents = events;
 			// .then(function (events) {
@@ -182,6 +183,7 @@ angular.module('app.controllers', [])
 			 $scope.$broadcast('scroll.infiniteScrollComplete');
 		}
 			$scope.events = [];
+			$scope.$broadcast('scroll.infiniteScrollComplete');
 			
 		}
 		else{
