@@ -29,8 +29,8 @@ describe('loginCtrl', function() {
 	    });
 
 		//Set up http backend expectations
-	    $httpBackend.whenGET("/login?email=user@test.com&password=secret").respond({status: 'OK'});
-	    $httpBackend.expectGET("/login?email=user@test.com&password=secret");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret").respond({status: 'OK'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret");
     
       	$scope.data.email = 'user@test.com';
       	$scope.data.password = 'secret';     
@@ -61,8 +61,8 @@ describe('loginCtrl', function() {
 	    });
 
 	    //Set up http backend expectations
-	    $httpBackend.whenGET("/login?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'INVALID_REQUEST'});
-	    $httpBackend.expectGET("/login?email=nonExistentUser@test.com&password=notAPassword");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'INVALID_REQUEST'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
 
     
       	$scope.data.email = 'nonExistentUser@test.com';
@@ -94,8 +94,8 @@ describe('loginCtrl', function() {
 	    });
 
 	    //Set up http backend expectations
-	    $httpBackend.whenGET("/login?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'UNKNOWN_ERROR'});
-	    $httpBackend.expectGET("/login?email=nonExistentUser@test.com&password=notAPassword");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'UNKNOWN_ERROR'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
 
     
       	$scope.data.email = 'nonExistentUser@test.com';
