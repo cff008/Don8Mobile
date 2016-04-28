@@ -230,7 +230,7 @@ angular.module('app.controllers', [])
 
   $scope.logout = function(){
     //TODO: clear information about current user - iteration3?
-    
+    $rootScope.$broadcast("logout");
     //change state to login screen
     $state.go('login');
   }
@@ -259,6 +259,11 @@ angular.module('app.controllers', [])
           console.log("Unsuccessful login");
       });
   }
+
+  $rootScope.$on("logout", function(){
+    $scope.credentials.email = undefined;
+    $scope.credentials.password = undefined;
+  })
 })
 
 .controller('forgotPasswordCtrl', function($scope) {
