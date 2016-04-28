@@ -10,7 +10,7 @@
 
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="email" placeholder="name@example.com" name="emailAddress" ng-model="credentials.email" required>
+                    <input type="email" placeholder="name@example.com" name="emailAddress" ng-model="credentials.email" required ng-maxlength="50">
                     <span style="color:red">
                         <span ng-show="(loginForm.emailAddress.$error.required || loginForm.emailAddress.$invalid) && loginForm.emailAddress.$dirty">!</span>
                     </span>
@@ -18,7 +18,7 @@
                 
                 <label class="item item-input">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="password" name="password" ng-model="credentials.password" required>
+                    <input type="password" placeholder="password" name="password" ng-model="credentials.password" required ng-maxlength="30">
                     <span style="color:red">
                         <span ng-show="loginForm.password.$error.required && loginForm.password.$dirty">!</span>
                     </span>

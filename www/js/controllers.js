@@ -229,7 +229,7 @@ angular.module('app.controllers', [])
   }
 
   $scope.logout = function(){
-    //TODO: clear information about current user - iteration3?
+    //Broadcast a logout event on $rootScope
     $rootScope.$broadcast("logout");
     //change state to login screen
     $state.go('login');
