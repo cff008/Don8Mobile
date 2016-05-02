@@ -32,8 +32,8 @@ describe('loginCtrl', function() {
 	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret").respond({status: 'OK'});
 	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret");
     
-      	$scope.data.email = 'user@test.com';
-      	$scope.data.password = 'secret';     
+      	$scope.credentials.email = 'user@test.com';
+      	$scope.credentials.password = 'secret';     
       	$scope.login();
       	$scope.$root.$digest();
       	$httpBackend.flush();
@@ -65,8 +65,8 @@ describe('loginCtrl', function() {
 	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
 
     
-      	$scope.data.email = 'nonExistentUser@test.com';
-      	$scope.data.password = 'notAPassword';
+      	$scope.credentials.email = 'nonExistentUser@test.com';
+      	$scope.credentials.password = 'notAPassword';
       	$scope.login();
       	$scope.$root.$digest();
       	$httpBackend.flush();
@@ -98,8 +98,8 @@ describe('loginCtrl', function() {
 	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
 
     
-      	$scope.data.email = 'nonExistentUser@test.com';
-      	$scope.data.password = 'notAPassword';
+      	$scope.credentials.email = 'nonExistentUser@test.com';
+      	$scope.credentials.password = 'notAPassword';
       	$scope.login();
       	$scope.$root.$digest();
       	$httpBackend.flush();
