@@ -229,8 +229,8 @@ angular.module('app.controllers', [])
   }
 
   $scope.logout = function(){
-    //TODO: clear information about current user - iteration3?
-    
+    //Broadcast a logout event on $rootScope
+    $rootScope.$broadcast("logout");
     //change state to login screen
     $state.go('login');
   }
@@ -240,22 +240,30 @@ angular.module('app.controllers', [])
 .controller('loginCtrl', function($scope, $rootScope, LoginService, $ionicPopup, $state) {
 
 	//Login verifier
-	$scope.data = {};
-    $scope.login = function() {
+	$scope.credentials = {
+    username: '',
+    password: ''
+  };
+  $scope.login = function() {
 
-    	console.log("LOGIN user: " + $scope.data.email + " - PW: " + $scope.data.password);	//TODO: This will need to be taken out for security reasons
-        LoginService.loginUser($scope.data.email, $scope.data.password).success(function(data) {
-            $state.go('tabsController.myProfile');
-            console.log("Successful login.");
-        }).error(function(data) {
-          //TODO: do different things for invalid password and server errors
-            var alertPopup = $ionicPopup.alert({
-                title: 'Login failed!',
-                template: data
-            });
-            console.log("Unsuccessful login");
-        });
-    }
+  	console.log("LOGIN user: " + $scope.credentials.email + " - PW: " + $scope.credentials.password);	//TODO: This will need to be taken out for security reasons
+      LoginService.loginUser($scope.credentials.email, $scope.credentials.password).success(function(data) {
+          $state.go('tabsController.myProfile');
+          console.log("Successful login.");
+      }).error(function(data) {
+        //TODO: do different things for invalid password and server errors
+          var alertPopup = $ionicPopup.alert({
+              title: 'Login failed!',
+              template: data
+          });
+          console.log("Unsuccessful login");
+      });
+  }
+
+  $rootScope.$on("logout", function(){
+    $scope.credentials.email = undefined;
+    $scope.credentials.password = undefined;
+  })
 })
 
 .controller('forgotPasswordCtrl', function($scope) {

@@ -29,8 +29,8 @@ describe('signupCtrl', function() {
 	    });
 
 		//Set up http backend expectations
-	    $httpBackend.whenGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'OK'});
-	    $httpBackend.expectGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'OK'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret");
     
       	$scope.data.email = 'user@test.com';
       	$scope.data.password = 'secret';     
@@ -65,8 +65,8 @@ describe('signupCtrl', function() {
 	    });
 
 		//Set up http backend expectations
-	    $httpBackend.whenGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'INVALID_REQUEST'});
-	    $httpBackend.expectGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'INVALID_REQUEST'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret");
     
       	$scope.data.email = 'user@test.com';
       	$scope.data.password = 'secret';     
@@ -99,8 +99,8 @@ describe('signupCtrl', function() {
 	    });
 
 		//Set up http backend expectations
-	    $httpBackend.whenGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'UNKNOWN_ERROR'});
-	    $httpBackend.expectGET("/create_profile?email=user@test.com&firstname=John&lastname=Doe&password=secret");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret").respond({status: 'UNKNOWN_ERROR'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/create_new_profile.php?email=user@test.com&firstname=John&lastname=Doe&password=secret");
     
       	$scope.data.email = 'user@test.com';
       	$scope.data.password = 'secret';     

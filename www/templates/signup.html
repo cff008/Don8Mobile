@@ -4,28 +4,28 @@
             <ion-list>
                 <label class="item item-input">
                     <span class="input-label">First Name</span>
-                    <input type="text" placeholder="First Name" ng-model="data.firstname" name="firstname" required>
+                    <input type="text" placeholder="First Name" ng-model="data.firstname" name="firstname" required ng-maxlength="30">
                     <span style="color:red">
                         <span ng-show="signupForm.firstname.$error.required && signupForm.firstname.$dirty">!</span>
                     </span>
                 </label>
                 <label class ="item item-input">
                     <span class="input-label">Last Name</span>
-                    <input type="text" placeholder="Last Name" ng-model="data.lastname" name="lastname" required>
+                    <input type="text" placeholder="Last Name" ng-model="data.lastname" name="lastname" required ng-maxlength="30">
                     <span style="color:red">
                         <span ng-show="signupForm.lastname.$error.required && signupForm.lastname.$dirty">!</span>
                     </span>
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="email" placeholder="name@example.com" ng-model="data.email" name="email" required>
+                    <input type="email" placeholder="name@example.com" ng-model="data.email" name="email" required ng-maxlength="50">
                     <span style="color:red">
                         <span ng-show="(signupForm.email.$error.required || signupForm.email.$invalid) && signupForm.email.$dirty">!</span>
                     </span>
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Password</span>
-                    <input type="text" placeholder="password" ng-model="data.password" name="password" required>
+                    <input type="text" placeholder="password" ng-model="data.password" name="password" required ng-maxlength="30">
                     <span style="color:red">
                         <span ng-show="signupForm.password.$error.required && signupForm.password.$dirty">!</span>
                     </span>
