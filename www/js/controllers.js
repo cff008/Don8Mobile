@@ -311,7 +311,8 @@ angular.module('app.controllers', [])
     '$ionicPopup',
     'dataService',
 	'$timeout',
-    function ($scope, $stateParams, $window, $ionicPopup, dataService, $timeout) {
+  '$rootScope',
+    function ($scope, $stateParams, $window, $ionicPopup, dataService, $timeout, $rootScope) {
 	  $scope.event = {name: '', city: '', district: '', image: '', street: '', number: '', zip: '', city: '', description: '', date: '', contact_name: '', contact_phone: '', contact_first: '', contact_last: '', website: '', state: ''};
 	  var i = 0,
 	  id = $stateParams.id;
@@ -336,11 +337,15 @@ angular.module('app.controllers', [])
       });
       };
 
-	  $scope.addEvent = function() {
-			//dataService.addUserToEvent(userid, id).then(
+	  $scope.addEvent = function() { //KAD
+			var userid = $rootScope.userid;
+      dataService.addUserToEvent(userid, id).then(
+        function(data){
+        console.log(data);
 				$scope.added = true;
 				$scope.buttonText = "Thanks for volunteering!!!"
-			//)
+			}
+      )//idk
 	  };
 	  
       $scope.call = function () {
