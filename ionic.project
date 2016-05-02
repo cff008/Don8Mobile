@@ -1,7 +1,8 @@
 {
   "name": "Don8",
   "app_id": "2ff3c64c",
-  "proxies": [  {
+  "proxies": [
+    {
       "path": "/events/all",
       "proxyUrl": "http://don8don8.site/data/events.php"
     },

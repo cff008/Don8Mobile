@@ -39,10 +39,10 @@ angular.module('app.controllers', [])
       $scope.data.state = data.state;
       $scope.data.interests = data.interests;
       $scope.data.organizations = data.organizations;
-      var tempinterests = []; 
+      $scope.this.items = []; 
       var temporganizations = [];
       for(i = 0; i < data.interests.length; i = i + 1){
-         return data.interests[i];
+        this.items.push(data.interests[i]);
          }
       
       for(i = 0; i < data.organizations.length; i = i + 1){
