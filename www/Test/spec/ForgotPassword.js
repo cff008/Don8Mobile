@@ -5,10 +5,10 @@ beforeEach(module('app.routes'));
 
 
 
-describe('loginCtrl', function() {
+describe('forgotPasswordCtrl', function() {
  var scope;
   
-    it('test basic login', function() {
+    it('test valid forgot password', function() {
 		var $scope = {}
 		module('app.controllers');
 		inject(function($rootScope, $controller, $q, _$httpBackend_) {
@@ -21,7 +21,7 @@ describe('loginCtrl', function() {
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
 	         // instantiate loginCtrl
-	        controller = $controller('loginCtrl', { 
+	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
 	                    '$scope': $scope
@@ -29,19 +29,18 @@ describe('loginCtrl', function() {
 	    });
 
 		//Set up http backend expectations
-	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret").respond({status: 'OK'});
-	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=user@test.com&password=secret");
+	    $httpBackend.whenGET("http://www.don8don8.site/data/send_password_email.php?email=test@test.com").respond({status: 'OK'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/send_password_email.php?email=test@test.com");
     
-      	$scope.credentials.email = 'user@test.com';
-      	$scope.credentials.password = 'secret';     
-      	$scope.login();
+      	$scope.data.email = 'test@test.com';    
+      	$scope.retrievePassword();
       	$scope.$root.$digest();
       	$httpBackend.flush();
-		expect(stateMock.go).toHaveBeenCalledWith('tabsController.myProfile');
+		expect(stateMock.go).toHaveBeenCalledWith('login');
     });
 
-    it('test invalid login', function() {
-    	var $scope = {};
+    it('test invalid password recovery', function() {
+		var $scope = {}
 		module('app.controllers');
 		inject(function($rootScope, $controller, $q, _$httpBackend_) {
 			$scope = $rootScope.$new();
@@ -53,28 +52,26 @@ describe('loginCtrl', function() {
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
 	         // instantiate loginCtrl
-	        controller = $controller('loginCtrl', { 
+	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
 	                    '$scope': $scope
 			});
 	    });
 
-	    //Set up http backend expectations
-	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'INVALID_REQUEST'});
-	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
-
+		//Set up http backend expectations
+	    $httpBackend.whenGET("http://www.don8don8.site/data/send_password_email.php?email=invaliduser@test.com").respond({status: 'INVALID_REQUEST'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/send_password_email.php?email=invaliduser@test.com");
     
-      	$scope.credentials.email = 'nonExistentUser@test.com';
-      	$scope.credentials.password = 'notAPassword';
-      	$scope.login();
+      	$scope.data.email = 'invaliduser@test.com';    
+      	$scope.retrievePassword();
       	$scope.$root.$digest();
       	$httpBackend.flush();
 		expect(ionicPopupMock.alert).toHaveBeenCalled();
     });
 
 	it('test server error', function() {
-    	var $scope = {};
+		var $scope = {}
 		module('app.controllers');
 		inject(function($rootScope, $controller, $q, _$httpBackend_) {
 			$scope = $rootScope.$new();
@@ -86,21 +83,19 @@ describe('loginCtrl', function() {
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
 	         // instantiate loginCtrl
-	        controller = $controller('loginCtrl', { 
+	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
 	                    '$scope': $scope
 			});
 	    });
 
-	    //Set up http backend expectations
-	    $httpBackend.whenGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword").respond({'status': 'UNKNOWN_ERROR'});
-	    $httpBackend.expectGET("http://www.don8don8.site/data/login.php?email=nonExistentUser@test.com&password=notAPassword");
-
+		//Set up http backend expectations
+	    $httpBackend.whenGET("http://www.don8don8.site/data/send_password_email.php?email=invaliduser@test.com").respond({status: 'UNKNOWN_ERROR'});
+	    $httpBackend.expectGET("http://www.don8don8.site/data/send_password_email.php?email=invaliduser@test.com");
     
-      	$scope.credentials.email = 'nonExistentUser@test.com';
-      	$scope.credentials.password = 'notAPassword';
-      	$scope.login();
+      	$scope.data.email = 'invaliduser@test.com';    
+      	$scope.retrievePassword();
       	$scope.$root.$digest();
       	$httpBackend.flush();
 		expect(ionicPopupMock.alert).toHaveBeenCalled();

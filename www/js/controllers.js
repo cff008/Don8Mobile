@@ -280,13 +280,23 @@ angular.module('app.controllers', [])
   })
 })
 
-.controller('forgotPasswordCtrl', function($scope) {
+.controller('forgotPasswordCtrl', function($scope, ForgotPasswordService, $ionicPopup, $state) {
   $scope.data = {};
 
-  $scope.submitEmail = function(){
-    //TODO: call service to validate the email address
-
-    //TODO: alert user to check email / of invalid email address
+  $scope.retrievePassword = function(){
+    ForgotPasswordService.retrievePassword($scope.data.email).success(function(data) {
+      console.log("Password requested for: " + $scope.data.email);
+      $state.go('login');
+      var alertPopup = $ionicPopup.alert({
+        title: 'Password recovery email sent',
+        template: data
+      });
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Error',
+        template: data
+      });
+    });
   }
 })
    
@@ -321,7 +331,8 @@ angular.module('app.controllers', [])
     '$ionicPopup',
     'dataService',
 	'$timeout',
-    function ($scope, $stateParams, $window, $ionicPopup, dataService, $timeout) {
+  '$rootScope',
+    function ($scope, $stateParams, $window, $ionicPopup, dataService, $timeout, $rootScope) {
 	  $scope.event = {name: '', city: '', district: '', image: '', street: '', number: '', zip: '', city: '', description: '', date: '', contact_name: '', contact_phone: '', contact_first: '', contact_last: '', website: '', state: ''};
 	  var i = 0,
 	  id = $stateParams.id;
@@ -346,11 +357,15 @@ angular.module('app.controllers', [])
       });
       };
 
-	  $scope.addEvent = function() {
-			//dataService.addUserToEvent(userid, id).then(
+	  $scope.addEvent = function() { //KAD
+			var userid = $rootScope.userid;
+      dataService.addUserToEvent(userid, id).then(
+        function(data){
+        console.log(data);
 				$scope.added = true;
 				$scope.buttonText = "Thanks for volunteering!!!"
-			//)
+			}
+      )//idk
 	  };
 	  
       $scope.call = function () {

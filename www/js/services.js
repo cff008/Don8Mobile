@@ -8,6 +8,40 @@ angular.module('app.services', [])
 
 }])
 
+.service('ForgotPasswordService', function($q, $http) {
+  return{
+    retrievePassword: function(email) {
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      $http({
+        method: 'GET',
+        url: 'http://www.don8don8.site/data/send_password_email.php',
+        params: {email: email}
+      }).then(function successCallback(response) {
+        if(response.data.status == 'OK'){
+          deferred.resolve('Check your email for a password reset link.');
+        } else if (response.data.status == 'INVALID_REQUEST'){
+          deferred.reject('Invalid username.');
+        }else {
+          deferred.reject('This shouldn\'t happen.');
+        }
+      }, function errorCallback(response) {
+        deferred.reject('Server communication error');
+      });
+      promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+      }
+      promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+      }
+      return promise;
+    }
+  }
+})
+
 .service('LoginService', function($q, $http, $rootScope) {
   return {
       loginUser: function(email, pw) {
@@ -306,7 +340,28 @@ angular.module('app.services', [])
     }, function errorCallback(response){
       $q.reject('Server communication error');
     });
-	  }
+	  },
+
+    //KAD
+      addUserToEvent: function(userid, id){
+    return $http({
+      method: 'GET',
+      url: 'http://don8don8.site/data/signup_for_event.php',
+      params: {userid: userid, eventid: id}
+    }).then(function successCallback(response) {
+    if(response.data.status == 'OK'){
+        return "success";
+      } else if(response.data.status == 'UNKNOWN_ERROR'){
+        $q.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        $q.reject('Invalid userid');
+      } else {
+        $q.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      $q.reject('Server communication error');
+    });
+    }
 	  
   }
 }
