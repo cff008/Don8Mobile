@@ -266,13 +266,23 @@ angular.module('app.controllers', [])
   })
 })
 
-.controller('forgotPasswordCtrl', function($scope) {
+.controller('forgotPasswordCtrl', function($scope, ForgotPasswordService, $ionicPopup, $state) {
   $scope.data = {};
 
-  $scope.submitEmail = function(){
-    //TODO: call service to validate the email address
-
-    //TODO: alert user to check email / of invalid email address
+  $scope.retrievePassword = function(){
+    ForgotPasswordService.retrievePassword($scope.data.email).success(function(data) {
+      console.log("Password requested for: " + $scope.data.email);
+      $state.go('login');
+      var alertPopup = $ionicPopup.alert({
+        title: 'Password recovery email sent',
+        template: data
+      });
+    }).error(function(data) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Error',
+        template: data
+      });
+    });
   }
 })
    
