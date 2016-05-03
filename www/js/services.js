@@ -81,7 +81,7 @@ angular.module('app.services', [])
       $http({
         method: 'GET',
         url: 'http://don8don8.site/data/update_profile.php',
-        params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email, interests: interests}
+        params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email}
       }).then(function successCallback(response) {
         //this callback will be called asynchronously when the response is available
         if(response.data.status == 'OK'){

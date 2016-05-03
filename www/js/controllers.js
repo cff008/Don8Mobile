@@ -39,10 +39,10 @@ angular.module('app.controllers', [])
       $scope.data.state = data.state;
       $scope.data.interests = data.interests;
       $scope.data.organizations = data.organizations;
-      $scope.this.items = []; 
+      $scope.data.items = []; 
       var temporganizations = [];
       for(i = 0; i < data.interests.length; i = i + 1){
-        this.items.push(data.interests[i]);
+        data.items.push(data.interests[i]);
          }
       
       for(i = 0; i < data.organizations.length; i = i + 1){
@@ -55,24 +55,38 @@ angular.module('app.controllers', [])
   }
   ])
   
+.controller('editProfileCtrl', function($scope, $rootScope, editProfileService, $ionicPopup) {
+  var id = $rootScope.userid;
+  $scope.data = {};
+    $scope.editProfile = function(){
+      editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
+     $scope.data.email).success(function(data) {
+        console.log("Account Updated" + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email); //TODO: remove this line for security reasons
+      })
+      .error(function(data) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Unable to edit profile',
+          template: data
+        });
+      });
+    }
+})
 
-.controller('editProfile', [
-  '$scope',
-  '$rootScope',
-  '$editProfileService',
-  function($scope, $rootScope, $editProfileService) {
-    $scope.data = {};
-    var updateInterests = [];
-    $scope.editProfile = function() {
-    editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
-     $scope.data.email, $scope.data.interests).then(function(data) {
-        
-    }).error(function(data) {
-      console.log("Unable to update settings on server." + data);
-    });
-  }
-  }
-  ])
+// .controller('editProfileCtrl', [
+//   '$scope',
+//   '$rootScope',
+//   '$editProfileService',
+//   function($rootScope, $scope, $editProfileService) {
+//   $scope.data = {}
+//   $scope.editProfile = function(){
+//     profileService.editProfile($scope.data.firstname, $scope.data.lastname,
+//      $scope.data.email, $scope.data.interests).success(function(data){ 
+//       console.log(data);
+//     }).error(function(data) {
+//       console.log("Unable to update settings on server." + data);
+//     });
+//   }}
+//   ])
 
 
    
@@ -297,10 +311,6 @@ angular.module('app.controllers', [])
         });
       });
     }
-
-})
-   
-.controller('editProfileCtrl', function($scope) {
 
 })
 
