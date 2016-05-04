@@ -152,7 +152,7 @@ angular.module('app.controllers', [])
 		$scope.events = [];
 		$scope.newEvents = [];
 		$scope.index = 0;
-     
+		
 	 addFive = function(eventss,index){
 		var tempevents = [], i = index;
 		for (i; i < eventss.length; i = i + 1) {
@@ -166,12 +166,12 @@ angular.module('app.controllers', [])
       
 	  
 	  $scope.loadNext = function () {
-		if($scope.events.length == 0){
+		
 		if($rootScope.userid != null){
 		dataService.getMyEvents($rootScope.userid).then(function(events){
 			$scope.newEvents = events;
 			// .then(function (events) {
-			  
+			  console.log(events);
 			  
 			  if($scope.newEvents != $scope.events){
 			  $scope.events = $scope.newEvents;
@@ -181,29 +181,36 @@ angular.module('app.controllers', [])
 		// .finally(function () 
 			});
 			 $scope.$broadcast('scroll.infiniteScrollComplete');
-		}
+			}
 			$scope.events = [];
 			$scope.$broadcast('scroll.infiniteScrollComplete');
 			
 		}
-		else{
-			if($scope.newEvents != $scope.events){
+		
+		$scope.loadNext();
+	
+			/*if($scope.newEvents != $scope.events){
 			  $scope.events = $scope.events.concat(addFive($scope.newEvents,$scope.index));
 			  $scope.index += $scope.newEvents.length;
 			  }
-			 $scope.$broadcast('scroll.infiniteScrollComplete');
-		}
-      };
+			 $scope.$broadcast('scroll.infiniteScrollComplete');*/
+		
+      
 	  
 	$scope.moreDataCanBeLoaded = function(){
-		if($scope.newEvents.length == $scope.index && $scope.newEvents.length != 0){
-			return false;
-		}else{
+		//if($scope.newEvents.length == $scope.index && $scope.newEvents.length != 0){
+			//return false;
+		//}else{
 			return true;
-		}
+		//}
 	};
-	}
-	  ])
+	
+	$rootScope.$on('$stateChangeSuccess', 
+		function(){ 
+		
+		$scope.loadNext();})
+	  
+	}  ])
    
 .controller('settingsCtrl', function($rootScope, $scope, SettingsService, $state, $ionicPopup) {
 
@@ -316,14 +323,16 @@ angular.module('app.controllers', [])
 	  $scope.event = {name: '', city: '', district: '', image: '', street: '', number: '', zip: '', city: '', description: '', date: '', contact_name: '', contact_phone: '', contact_first: '', contact_last: '', website: '', state: ''};
 	  var i = 0,
 	  id = $stateParams.id;
-	  $scope.added = false;
+	  if($scope.added == null){
+	  $scope.added = false;}
 	  console.log($stateParams);	
       $scope.loading = true;
 	  $scope.buttonText = "Signup for Event";
 	  dataService.getEvent(id).then(function(events){
 	  $scope.event = events;
 		$timeout(function(){$scope.$apply($scope.event);});
-		console.log($scope.event);
+		
+		doCheckSignUpCheck();
       }).finally(function () {
 		$scope.loading = false
       });
@@ -336,14 +345,33 @@ angular.module('app.controllers', [])
         $scope.loading = false;
       });
       };
-
+	
+	  doCheckSignUpCheck = function() {
+		dataService.getMyEvents($rootScope.userid).then(function(events){
+			console.log(id);
+			for(i = 0 ; i < events.length; i++){
+			console.log(events[i].id);
+				if(events[i].id == id){
+					
+					$scope.added = true;
+					$scope.buttonText = "Thanks for volunteering!!!"
+				}
+			}
+		});
+	  }
+	  
+	  $scope.checkSignup = function() {
+		console.log($scope.added);
+			return $scope.added;
+	  }
+		
 	  $scope.addEvent = function() { //KAD
 			var userid = $rootScope.userid;
       dataService.addUserToEvent(userid, id).then(
         function(data){
         console.log(data);
 				$scope.added = true;
-				$scope.buttonText = "Thanks for volunteering!!!"
+				
 			}
       )//idk
 	  };

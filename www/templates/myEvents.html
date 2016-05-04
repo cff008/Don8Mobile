@@ -1,5 +1,5 @@
 <!-- Fixed -->
-<ion-view title="My Events">
+<ion-view title="My Events" ng-controller="myEventsCtrl">
     <ion-content padding="true"style="background: url(img/background.jpg) no-repeat center;" >
 
     <ion-refresher on-refresh="doRefresh()"></ion-refresher>
@@ -16,10 +16,7 @@
       </ion-item>
       <ion-item class="text-center item-stable" ng-if="events && !events.length">No events found :(</ion-item>
     </ion-list>
-    <ion-infinite-scroll
-      ng-if="moreDataCanBeLoaded()"
-      on-infinite="loadNext()">
-    </ion-infinite-scroll>
+    
   </ion-content>
 	</ion-content>
 </ion-view>

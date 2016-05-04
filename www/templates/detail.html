@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view ng-controller="detailCtrl">
   <ion-nav-title>Details</ion-nav-title>
   <ion-content padding="true">
     <ion-refresher class="spinner-balanced" on-refresh="reload()"></ion-refresher>
@@ -16,7 +16,7 @@
 
 	  <ion-list>
 		<ion-item>
-		<button class="button button-block"  ng-click="addEvent()" ng-disable="{{added}}">
+		<button class="button button-block"  ng-click="addEvent()" ng-disabled="checkSignup()">
 			{{buttonText}}
 		</button>
 		</ion item>
@@ -24,8 +24,8 @@
       <ion-list>
         <ion-item class="item-divider item-icon-right"><b>Address</b> <i class="icon ion-location"></i></ion-item>
         <ion-item>
-         {{event.number}} {{event.street}}<br>
-         {{event.city}}, {{event.zip}} 
+         {{event.street}} {{event.number}}<br>
+         {{event.zip}}, {{event.city}}
         </ion-item>
       </ion-list>
 	  <b> Description</b>
