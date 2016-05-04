@@ -19,16 +19,19 @@ angular.module('app.controllers', [])
 }
 })
 
+
 .controller('myProfileCtrl', [
   '$scope',
   '$rootScope',  
   'profileService',
   function($scope, $rootScope, profileService) {
     var id = $rootScope.userid;
-    $scope.data = {};
-    $scope.interests = [];
-    $scope.organizations = [];
+    $scope.data = [];
+    $scope.interestslist = [];
+    $scope.organizationslist = [];
     $scope.getProfile = function() { 
+    // var interestslist = []
+    // var organizationslist = []
     profileService.getProfile(id).then(function(data){
       $scope.data.firstname = data.firstname;
       $scope.data.lastname = data.lastname;
@@ -39,17 +42,18 @@ angular.module('app.controllers', [])
       $scope.data.state = data.state;
       $scope.data.interests = data.interests;
       $scope.data.organizations = data.organizations;
-      $scope.data.items = []; 
-      var temporganizations = [];
-      for(i = 0; i < data.interests.length; i = i + 1){
-        data.items.push(data.interests[i]);
-         }
       
+      for(i = 0; i < data.interests.length; i = i + 1){
+        $scope.interestslist.push(data.interests[i]);
+         }
+      //return interestslist;
+
       for(i = 0; i < data.organizations.length; i = i + 1){
-         temporganizations.push(organizations[i]);
+         $scope.organizationslist.push(data.organizations[i]);
       }
-      return temporganizations;
-    });
+      return organizationslist;
+    })
+
     }
     $scope.getProfile();
   }

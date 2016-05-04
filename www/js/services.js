@@ -258,8 +258,8 @@ angular.module('app.services', [])
 
     $http({
       method: 'GET',
-      url: '/update_settings',
-      params: {userid: $rootScope.userid, push: push, email: email, location_access: location}
+      url: 'http://www.don8don8.site/data/update_settings.php',
+      params: {userid: $rootScope.userid, push: push, email: email, location_access: location, anon: 0, radius: 15}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
         deferred.resolve('Updated settings for user on server.');

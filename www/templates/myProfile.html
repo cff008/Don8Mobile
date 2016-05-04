@@ -28,10 +28,11 @@
             </p>
         </div>
         <ion-list>
-            <ion-item>
-                <ion-label>{{data.interests}}</ion-label>
+        <ion-item collection-repeat= "interest in interestslist" >
+            {{interestslist}}
         </ion-item>
         </ion-list>
+        
         <div class="spacer" style="width: 300px; height: 8px;"></div>
         <div>
             <p
@@ -43,9 +44,13 @@
             </p>
         </div>
         <ion-list>
-            <ion-item>
-                <ion-label>{{data.organizations[0]}}</ion-label>
+        <ion-item collection-repeat="organization in organizationslist">
+            {{organizationslist}}
         </ion-item>
+        </ion-list>
+        <b>{{interestslist[0]}}</b>
+        <b>{{interestslist[1]}}</b>
+        <b>{{interestslist[2]}}</b>
         <div class="spacer" style="width: 300px; height: 8px;"></div>
         <div class="spacer" style="width: 300px; height: 11px;"></div>
     </ion-content>
