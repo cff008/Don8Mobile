@@ -1,3 +1,8 @@
+beforeEach(module('app.services'));
+beforeEach(module('ui.router'));
+beforeEach(module('ionicUIRouter'));
+beforeEach(module('app.routes'));
+
 describe('eventFeedCtrl', function() {
  var scope;
 
@@ -103,14 +108,20 @@ it('Load ', function() {
 		
 		var mockEvent= [{id:1, name:'Test Event', organization:'test'}];
 		var mockEvent2 = [{id:1, name:'Test Event', organization:'test'}, {id:1, name:'Test Event', organization:'test'}]
+		
 		module('app.controllers');
 
 		inject(function($rootScope,$controller, $q) {
 				$scope = $rootScope.$new()
+				rootScopeMook = {
+					
+					$on: function() {return true},
+				};
 				eventServiceMock = {
 					getNext: jasmine.createSpy('getNext spy').and.returnValue('pie'),
 				};
 				  eventServiceMock.getMyEvents = function(id) {
+					console.log(id);
 					var deferred = $q.defer();
 					deferred.resolve(mockEvent);
 					
@@ -123,20 +134,46 @@ it('Load ', function() {
 				
 				
 				
-				controller = $controller('myEventsCtrl', {'$scope': $scope, '$state': stateMock, 'dataService': eventServiceMock});
+				controller = $controller('myEventsCtrl', {'$scope': $scope, '$state': stateMock, 'dataService': eventServiceMock, '$rootScope':rootScopeMook});
 			});
     
       $scope.loadNext();
 	  $scope.$root.$digest();
-      expect($scope.events[0]).toEqual(mockEvent[0]);
-	  expect($scope.index).toEqual(1);
+	  expect($scope.index).toEqual(0);
 	  $scope.loadNext();
 	  $scope.$root.$digest();
-	  expect($scope.index).toEqual(2);
-	  expect($scope.events).toEqual(mockEvent);
+	  expect($scope.index).toEqual(0);
+	  expect($scope.events).toEqual([]);
     });
 
+	it("test EventFeed", function(){
+		var $scope = {}
+		module('app.controllers');
+		inject(function($rootScope, $controller, $q, _$httpBackend_) {
+			$scope = $rootScope.$new();
+			$httpBackend = _$httpBackend_;
+			//mock state
+	        stateMock = jasmine.createSpyObj('$state.spy', ['go']);
 
-	
+	        // mock $ionicPopup
+	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
+
+	         // instantiate forgotPasswordCtrl
+	        controller = $controller('eventFeedCtrl', { 
+	                    '$scope': $scope, 
+	                    '$state': stateMock, 
+			});
+	    });
+
+		//Set up http backend expectations
+	    $httpBackend.whenGET("http://don8don8.site/events.php").respond(200,{events: {}});
+	    $httpBackend.expectGET("http://don8don8.site/data/events.php").respond(200,{events: {}});
+    
+      	$scope.loadNext();
+      	$scope.$root.$digest();
+      	$httpBackend.flush();
+		
+
+	});
 
 })
