@@ -202,5 +202,31 @@ describe('settingsCtrl', function() {
       	$scope.$root.$digest();
       	$httpBackend.flush();
     });
+
+	it('test logout', function() {
+		var $scope = {}
+		module('app.controllers');
+		inject(function($rootScope, $controller, $q, _$httpBackend_) {
+			$scope = $rootScope.$new();
+			$rootScope.userid = 1;
+			$httpBackend = _$httpBackend_;
+			//mock state
+	        stateMock = jasmine.createSpyObj('$state.spy', ['go']);
+
+	        // mock $ionicPopup
+	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
+
+	         // instantiate settingsCtrl
+	        controller = $controller('settingsCtrl', { 
+	                    '$ionicPopup': ionicPopupMock, 
+	                    '$state': stateMock, 
+	                    '$scope': $scope
+			});
+	    });
+
+    	$scope.logout();
+      	$scope.$root.$digest();
+      	expect(stateMock.go).toHaveBeenCalledWith('login');
+    });
  
 });
