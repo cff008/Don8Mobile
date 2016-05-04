@@ -13,7 +13,7 @@
                  <div class="spacer" style="width: 300px; height: 15px;"></div>
         <label class="item item-input">
                     <span class="input-label">First Name</span>
-                    <input type="text" placeholder="First Name" ng-model="data.firstname" name="firstname" required>
+                    <input type="text" placeholder="First Name" ng-model="data.firstname" required>
                     <span style="color:red">
                         <span ng-show="editProfile.firstname.$error.required && editProfile.firstname.$dirty">!</span>
                     </span>
@@ -45,61 +45,62 @@
 
     <ion-item>
       <ion-label>Board Service</ion-label>
-      <ion-checkbox dark checked="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Clerical</ion-label>
-      <ion-checkbox value="cherry" disabled="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Education</ion-label>
-      <ion-checkbox secondary></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Finance</ion-label>
-      <ion-checkbox danger checked="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Food</ion-label>
-      <ion-checkbox></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Medical</ion-label>
-      <ion-checkbox energized checked="true" dark></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Seniors</ion-label>
-      <ion-checkbox royal checked="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Disabled</ion-label>
-      <ion-checkbox disabled="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Physical Labor</ion-label>
-      <ion-checkbox dark checked="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Technology</ion-label>
-      <ion-checkbox secondary checked="true"></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Youth</ion-label>
-      <ion-checkbox royal></ion-checkbox>
+      <ion-checkbox checked="true"></ion-checkbox>
     </ion-item>
   </ion-list>
   <div class="spacer" style="width: 300px; height: 10px;"></div>
         <p align="center">
-        <a ui-sref="tabsController.myProfile" id="Update" class="button button-stable  button-block" ng-click="editProfile()">Update</a>
+
+        <a id="Update" ng-click="editProfile()" class="button button-stable  button-block" ui-sref="tabsController.myProfile">Update</a>
         </p> 
 </ion-content>
