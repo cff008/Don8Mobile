@@ -349,6 +349,7 @@ angular.module('app.controllers', [])
       $scope.loading = true;
 	  $scope.buttonText = "Signup for Event";
 	  dataService.getEvent(id).then(function(events){
+		console.log(events);
 	  $scope.event = events;
 		$timeout(function(){$scope.$apply($scope.event);});
 		
@@ -368,9 +369,8 @@ angular.module('app.controllers', [])
 	
 	  doCheckSignUpCheck = function() {
 		dataService.getMyEvents($rootScope.userid).then(function(events){
-			console.log(id);
 			for(i = 0 ; i < events.length; i++){
-			console.log(events[i].id);
+			
 				if(events[i].id == id){
 					
 					$scope.added = true;
@@ -381,7 +381,7 @@ angular.module('app.controllers', [])
 	  }
 	  
 	  $scope.checkSignup = function() {
-		console.log($scope.added);
+		
 			return $scope.added;
 	  }
 		
@@ -389,7 +389,7 @@ angular.module('app.controllers', [])
 			var userid = $rootScope.userid;
       dataService.addUserToEvent(userid, id).then(
         function(data){
-        console.log(data);
+        
 				$scope.added = true;
 				
 			}
@@ -397,18 +397,35 @@ angular.module('app.controllers', [])
 	  };
 	  
       $scope.call = function () {
-        $window.open('tel:' + $scope.event.contact.tel, '_system');
+        $window.open('tel:' + $scope.event.contact_tel, '_system');
       };
 
       $scope.mail = function () {
-        $window.open('mailto:' + $scope.event.contact.email, '_system');
+        $window.open('mailto:' + $scope.event.contact_email, '_system');
       };
 
       $scope.website = function () {
-        $window.open($scope.event.website, '_system');
+        $window.open("http://"+$scope.event.website, '_system');
       };
 
       $scope.map = function () {
+		if($scope.event.lat == null || $scope.event.lng){
+			
+			var address = $scope.event.number+" "+$scope.event.street+" ,"+$scope.event.city+" ,"+$scope.event.state;
+			console.log(address);
+			
+			dataService.getCoordinatesForEvents(address).then(function(results){
+				console.log(results);
+				$scope.event.lat = results.geometry.location.lat;
+				$scope.event.lng = results.geometry.location.lng;
+				$scope.event.lng = $scope.event.lng.toFixed(3);
+				$scope.event.lat = $scope.event.lat.toFixed(3);
+				console.log($scope.event.lng);
+				console.log($scope.event.lat);
+			}
+			);
+		}
+	  
         if (ionic.Platform.isIOS()) {
           $window.open('maps://?q=' + $scope.event.lat + ',' + $scope.event.lng, '_system');
         } else {

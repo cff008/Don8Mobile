@@ -361,7 +361,30 @@ angular.module('app.services', [])
     }, function errorCallback(response){
       $q.reject('Server communication error');
     });
+    },
+	//gonna call google  key AIzaSyCmkJQMtkLmPvMAaVvColPtbIO18ZjNAQw 
+	getCoordinatesForEvents: function(location){
+	  return $http({
+		method: 'GET',
+		url: 'https://maps.googleapis.com/maps/api/geocode/json',
+		params: {address:location, key: 'AIzaSyCmkJQMtkLmPvMAaVvColPtbIO18ZjNAQw'}
+		
+	}).then(function successCallback(response) {
+		console.log(response);
+    if(response.status == '200'){
+        return response.data.results[0];
+      } else if(response.results.status == 'UNKNOWN_ERROR'){
+        $q.reject('Something went wrong. Please try again.')
+      } else if(response.data.status == 'INVALID_REQUEST'){
+        $q.reject('Invalid userid');
+      } else {
+        $q.reject('This shouldn\'t happen.');
+      }
+    }, function errorCallback(response){
+      $q.reject('Server communication error');
     }
+	);}
+	
 	  
   }
 }
