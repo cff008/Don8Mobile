@@ -51,23 +51,25 @@ angular.module('app.controllers', [])
     
 
     $scope.editProfile = function(){
+      console.log("I got called!");
     editProfileService.editProfile($rootScope.userid, $scope.firstname, $scope.lastname,
-      $scope.email, $scope.phone, $scope.interests).success(function(data) {
-        $scope.firstname = firstname;
-        $scope.lastname = lastname;
-        $scope.email = email;
-        $scope.phone = phone;
-        $scope.interests = tempinterests;
+      $scope.email, $scope.phone, $scope.interests).success(function(user) {
+        console.log("user:" + JSON.stringify(user));
+        $scope.firstname = user.firstname;
+        $scope.lastname = user.lastname;
+        $scope.email = user.email;
+        $scope.phone = user.phone;
+        $scope.interests = user.interests;
 
         console.log("Account Updated" + $scope.firstname + " " + $scope.lastname + " - EMAIL: " + $scope.email); //TODO: remove this line for security reasons
       })
 
-      // .error(function(data) {
-      //   var alertPopup = $ionicPopup.alert({
-      //     title: 'Unable to edit profile',
-      //     template: data
-      //   });
-      // })
+      .error(function(data) {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Unable to edit profile',
+          template: data
+        });
+      })
 }  
   console.log(tempinterests)
 }

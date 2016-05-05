@@ -111,16 +111,21 @@ angular.module('app.services', [])
     editProfile: function(firstname, lastname, email, phone, interests) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-
+console.log("request params: id=" + $rootScope.userid + " firstname=" + firstname
+  + " lastname= " + lastname + "email= " + email + "phone= " + phone + "interests= " + interests);
       $http({
         method: 'GET',
         url: 'http://don8don8.site/data/update_profile.php',
         params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email, phone: phone, interests: interests}
       }).then(function successCallback(response) {
+        //console.log(response.data);
         //this callback will be called asynchronously when the response is available
         if(response.data.status == 'OK'){
-          deferred.resolve('Changes Made');
-          $rootScope.userid = response.data.userid;
+         // deferred.resolve('Changes Made');
+         deferred.resolve(response.data.user); //KAD I think this is what actually gets returned
+          $rootScope.userid = response.data.user.id; //KAD
+          //KAD return updated data- idk if this did anything
+          return response.data.user;
         } else if(response.data.status == 'UNKNOWN_ERROR') {
           deferred.reject('Something went wrong. Please try again.');
         } else if(response.data.status == 'INVALID_REQUEST'){
