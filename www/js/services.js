@@ -108,14 +108,14 @@ angular.module('app.services', [])
 
 .service('editProfileService', function($q, $http, $rootScope) {
   return{
-    editProfile: function(firstname, lastname, email, interests) {
+    editProfile: function(firstname, lastname, email, phone, interests) {
       var deferred = $q.defer();
       var promise = deferred.promise;
 
       $http({
         method: 'GET',
         url: 'http://don8don8.site/data/update_profile.php',
-        params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email}
+        params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email, phone: phone, interests: interests}
       }).then(function successCallback(response) {
         //this callback will be called asynchronously when the response is available
         if(response.data.status == 'OK'){
