@@ -20,7 +20,7 @@ describe('forgotPasswordCtrl', function() {
 	        // mock $ionicPopup
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
-	         // instantiate loginCtrl
+	         // instantiate forgotPasswordCtrl
 	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
@@ -51,7 +51,7 @@ describe('forgotPasswordCtrl', function() {
 	        // mock $ionicPopup
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
-	         // instantiate loginCtrl
+	         // instantiate forgotPasswordCtrl
 	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
@@ -82,7 +82,7 @@ describe('forgotPasswordCtrl', function() {
 	        // mock $ionicPopup
 	        ionicPopupMock = jasmine.createSpyObj('$ionicPopup spy', ['alert']);
 
-	         // instantiate loginCtrl
+	         // instantiate forgotPasswordCtrl
 	        controller = $controller('forgotPasswordCtrl', { 
 	                    '$ionicPopup': ionicPopupMock, 
 	                    '$state': stateMock, 
