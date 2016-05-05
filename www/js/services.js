@@ -86,7 +86,7 @@ angular.module('app.services', [])
     var deferred = $q.defer();
     var promise = $http({
       method: 'GET',
-      url: 'http://don8don8.site/data/displayprofile.php',
+      url: 'http://www.don8don8.site/data/displayprofile.php',
       params: {id: $rootScope.userid}
     }).then(function successCallback(response) {
       if(response.data.status == 'OK'){
@@ -108,14 +108,12 @@ angular.module('app.services', [])
 
 .service('editProfileService', function($q, $http, $rootScope) {
   return{
-    editProfile: function(firstname, lastname, email, phone, interests) {
+    editProfile: function(id, firstname, lastname, email, phone, interests) {
       var deferred = $q.defer();
       var promise = deferred.promise;
-console.log("request params: id=" + $rootScope.userid + " firstname=" + firstname
-  + " lastname= " + lastname + "email= " + email + "phone= " + phone + "interests= " + interests);
       $http({
         method: 'GET',
-        url: 'http://don8don8.site/data/update_profile.php',
+        url: 'http://www.don8don8.site/data/update_profile.php',
         params: {userid: $rootScope.userid, firstname: firstname, lastname: lastname, email: email, phone: phone, interests: interests}
       }).then(function successCallback(response) {
         //console.log(response.data);
@@ -193,7 +191,7 @@ console.log("request params: id=" + $rootScope.userid + " firstname=" + firstnam
         //this callback will be called asynchronously when the response is available
         if(response.data.status == 'OK'){
           deferred.resolve('Welcome ' + firstname + ' ' + lastname + '!');
-          $rootScope.userid = response.data.userid;
+          $rootScope.userid = response.data.id;
         } else if(response.data.status == 'UNKNOWN_ERROR') {
           deferred.reject('Something went wrong. Please try again.');
         } else if(response.data.status == 'INVALID_REQUEST'){
@@ -295,7 +293,7 @@ console.log("request params: id=" + $rootScope.userid + " firstname=" + firstnam
 .service('dataService', [ '$http', '$q',
     function ($http, $q) { return {
       getEvents: function(){
-		  return $http.get('http://don8don8.site/data/events.php').then(function(resp){
+		  return $http.get('http://www.don8don8.site/data/events.php').then(function(resp){
 			if(typeof resp.data === 'object'){
 			  this.events = resp.data.events;
 				console.log(this.events);
@@ -311,7 +309,7 @@ console.log("request params: id=" + $rootScope.userid + " firstname=" + firstnam
 	getEvent: function(id){
 		return $http({
       method: 'GET',
-      url: 'http://don8don8.site/data/events.php',
+      url: 'http://www.don8don8.site/data/events.php',
       params: {id: id}
     }).then(function successCallback(response) {
 		if(response.data.status == 'OK'){
@@ -330,7 +328,7 @@ console.log("request params: id=" + $rootScope.userid + " firstname=" + firstnam
 	getMyEvents: function(id){
 		return $http({
       method: 'GET',
-      url: 'http://don8don8.site/data/events.php',
+      url: 'http://www.don8don8.site/data/events.php',
       params: {userid: id}
     }).then(function successCallback(response) {
 		if(response.data.status == 'OK'){
@@ -351,7 +349,7 @@ console.log("request params: id=" + $rootScope.userid + " firstname=" + firstnam
       addUserToEvent: function(userid, id){
     return $http({
       method: 'GET',
-      url: 'http://don8don8.site/data/signup_for_event.php',
+      url: 'http://www.don8don8.site/data/signup_for_event.php',
       params: {userid: userid, eventid: id}
     }).then(function successCallback(response) {
     if(response.data.status == 'OK'){

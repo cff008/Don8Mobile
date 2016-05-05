@@ -9,10 +9,11 @@ angular.module('app.controllers', [])
   'profileService',
   function($scope, $rootScope, profileService) {
     var id = $rootScope.userid;
-    $scope.data = {};
+    
     $scope.interest = {};
     $scope.organization = {};
-    $scope.getProfile = function() { 
+    $scope.getProfile = function() {
+    $scope.data = {}; 
     profileService.getProfile(id).then(function(data){
       $scope.data.firstname = data.firstname;
       $scope.data.lastname = data.lastname;
@@ -27,6 +28,10 @@ angular.module('app.controllers', [])
     })
   }
   $scope.getProfile();
+  $rootScope.$on('$stateChangeSuccess', 
+    function(){ 
+    
+    $scope.getProfile();})
   }
   ])
 
@@ -43,27 +48,21 @@ angular.module('app.controllers', [])
   
   var tempinterests = [];
   $scope.getCheckedTrue = function(ids){
-
-    tempinterests.push(ids);
+     //var temp = ids.toString();
+     tempinterests.push(ids);
   }
-  console.log(tempinterests)
-       
     
-
     $scope.editProfile = function(){
-      console.log("I got called!");
-    editProfileService.editProfile($rootScope.userid, $scope.firstname, $scope.lastname,
-      $scope.email, $scope.phone, $scope.interests).success(function(user) {
-        console.log("user:" + JSON.stringify(user));
-        $scope.firstname = user.firstname;
-        $scope.lastname = user.lastname;
-        $scope.email = user.email;
-        $scope.phone = user.phone;
-        $scope.interests = user.interests;
+      var finalinterests = tempinterests[0];
+      for(var j = 1; j < tempinterests.length; j++){
+        finalinterests = finalinterests + "," + tempinterests[j];
+      }
 
+      console.log(finalinterests);
+      editProfileService.editProfile(id, $scope.data.firstname, $scope.data.lastname,
+      $scope.data.email, $scope.data.phone, finalinterests).success(function(data) {
         console.log("Account Updated" + $scope.firstname + " " + $scope.lastname + " - EMAIL: " + $scope.email); //TODO: remove this line for security reasons
       })
-
       .error(function(data) {
         var alertPopup = $ionicPopup.alert({
           title: 'Unable to edit profile',
@@ -71,7 +70,7 @@ angular.module('app.controllers', [])
         });
       })
 }  
-  console.log(tempinterests)
+
 }
 ])
 
@@ -301,7 +300,7 @@ angular.module('app.controllers', [])
       SignupService.signupUser($scope.data.firstname, $scope.data.lastname, $scope.data.email, $scope.data.password).success(function(data) {
         console.log("Account Created: NAME: " + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email + " - PW: " + $scope.data.password); //TODO: remove this line for security reasons
         $state.go('tabsController.editProfile');
-        $rootScope.userid = data.userid;
+        //$rootScope.userid = data.userid;
         var alertPopup = $ionicPopup.alert({
           title: 'Welcome to Don8!',
           template: 'Please fill out your user profile.'
@@ -491,7 +490,7 @@ angular.module('app.controllers', [])
 
       $scope.reload = function () {
         $scope.loading = true;
-		events =  searchfor($scope.search);
+		  events =  searchfor($scope.search);
         $scope.limit = 10;
         $scope.events = events;
         

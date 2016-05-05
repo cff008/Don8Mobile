@@ -7,28 +7,28 @@
                  <div class="spacer" style="width: 300px; height: 15px;"></div>
         <label class="item item-input">
                     <span class="input-label">First Name</span>
-                    <input type="text" placeholder="First Name" ng-model="firstname" required>
+                    <input type="text" placeholder="First Name" ng-model="data.firstname" required>
                    <!-- <span style="color:red">
                         <span ng-show="editProfile.firstname.$error.required && editProfile.firstname.$dirty">!</span>
                     </span>-->
                 </label>
                 <label class ="item item-input">
                     <span class="input-label">Last Name</span>
-                    <input type="text" placeholder="Last Name" ng-model="lastname" name="lastname" required>
+                    <input type="text" placeholder="Last Name" ng-model="data.lastname" name="lastname" required>
                   <!--  <span style="color:red">
                         <span ng-show="editProfle.lastname.$error.required && editProfile.lastname.$dirty">!</span>
                     </span>-->
                 </label>
                 <label class="item item-input">
                     <span class="input-label">Email</span>
-                    <input type="email" placeholder="name@example.com" ng-model="email" name="email" required>
+                    <input type="email" placeholder="name@example.com" ng-model="data.email" name="email" required>
                  <!--   <span style="color:red">
                         <span ng-show="(editProfile.email.$error.required || editProfile.email.$invalid) && editProfile.email.$dirty">!</span> -->
                     </span>
                 </label>
                  <label class ="item item-input">
                     <span class="input-label">phone</span>
-                    <input type="text" placeholder="Phone Number" ng-model="phone" name="phone" required>
+                    <input type="text" placeholder="Phone Number" ng-model="data.phone" name="phone" required>
                   <!--  <span style="color:red">
                         <span ng-show="editProfle.lastname.$error.required && editProfile.lastname.$dirty">!</span>
                     </span>-->
@@ -41,64 +41,64 @@
   <ion-list>
     <ion-item>
       <ion-label>Advocacy</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(1)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(1)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Board Service</ion-label>
-      <ion-checkbox ng-model="interests"  ng-checked="getCheckedTrue(2)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests"  ng-change="getCheckedTrue(2)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Clerical</ion-label>
-      <ion-checkbox ng-model="interests"  ng-checked="getCheckedTrue(3)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests"  ng-change="getCheckedTrue(3)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Education</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(4)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(4)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Finance</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(5)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(5)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Food</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(6)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(6)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Medical</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(7)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(7)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Seniors</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(8)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(8)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Disabled</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(9)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(9)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Physical Labor</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(10)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(10)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Technology</ion-label>
-      <ion-checkbox ng-model="interests"  ng-checked="getCheckedTrue(11)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests"  ng-change="getCheckedTrue(11)"></ion-checkbox>
     </ion-item>
 
     <ion-item>
       <ion-label>Youth</ion-label>
-      <ion-checkbox ng-model="interests" ng-checked="getCheckedTrue(12)?true:false;"></ion-checkbox>
+      <ion-checkbox ng-model="interests" ng-change="getCheckedTrue(12);"></ion-checkbox>
     </ion-item>
-  </ion-list>r
+  </ion-list>
   <div class="spacer" style="width: 300px; height: 10px;"></div>
         <p align="center">
 
