@@ -1,23 +1,6 @@
 angular.module('app.controllers', [])
    
-.controller('cameraCtrl', function ($scope, $cordovaCamera) {
-   $scope.getPicture = function() {
-    var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-        encodingType: Camera.EncodingType.JPEG,
-        popoverOptions: CameraPopoverOptions
-   };
 
-    $cordovaCamera.getPicture(options).then(function (imageData) {
-    $scope.imgURI =  imageData;
-   }, function (err) {
-       console.log("err accessing photo library", err)
-  });
-  
-}
-})
 
 
 .controller('myProfileCtrl', [
@@ -26,12 +9,10 @@ angular.module('app.controllers', [])
   'profileService',
   function($scope, $rootScope, profileService) {
     var id = $rootScope.userid;
-    $scope.data = [];
-    $scope.interestslist = [];
-    $scope.organizationslist = [];
+    $scope.data = {};
+    $scope.interest = {};
+    $scope.organization = {};
     $scope.getProfile = function() { 
-    // var interestslist = []
-    // var organizationslist = []
     profileService.getProfile(id).then(function(data){
       $scope.data.firstname = data.firstname;
       $scope.data.lastname = data.lastname;
@@ -42,56 +23,55 @@ angular.module('app.controllers', [])
       $scope.data.state = data.state;
       $scope.data.interests = data.interests;
       $scope.data.organizations = data.organizations;
-      
-      for(i = 0; i < data.interests.length; i = i + 1){
-        $scope.interestslist.push(data.interests[i]);
-         }
-      //return interestslist;
-
-      for(i = 0; i < data.organizations.length; i = i + 1){
-         $scope.organizationslist.push(data.organizations[i]);
-      }
-      return organizationslist;
+  
     })
-
-    }
-    $scope.getProfile();
+  }
+  $scope.getProfile();
   }
   ])
+
   
-.controller('editProfileCtrl', function($scope, $rootScope, editProfileService, $ionicPopup) {
+.controller('editProfileCtrl', [
+  '$scope',
+  '$rootScope',  
+  'editProfileService',
+  '$ionicPopup',
+  function($scope, $rootScope, editProfileService, $ionicPopup) {
   var id = $rootScope.userid;
   $scope.data = {};
+  $scope.ids = {};
+  
+  var tempinterests = [];
+  $scope.getCheckedTrue = function(ids){
+
+    tempinterests.push(ids);
+  }
+  console.log(tempinterests)
+       
+    
+
     $scope.editProfile = function(){
-      editProfileService.editProfile($scope.data.firstname, $scope.data.lastname,
-     $scope.data.email).success(function(data) {
-        console.log("Account Updated" + $scope.data.firstname + " " + $scope.data.lastname + " - EMAIL: " + $scope.data.email); //TODO: remove this line for security reasons
+    editProfileService.editProfile($rootScope.userid, $scope.firstname, $scope.lastname,
+      $scope.email, $scope.phone, $scope.interests).success(function(data) {
+        $scope.firstname = firstname;
+        $scope.lastname = lastname;
+        $scope.email = email;
+        $scope.phone = phone;
+        $scope.interests = tempinterests;
+
+        console.log("Account Updated" + $scope.firstname + " " + $scope.lastname + " - EMAIL: " + $scope.email); //TODO: remove this line for security reasons
       })
-      .error(function(data) {
-        var alertPopup = $ionicPopup.alert({
-          title: 'Unable to edit profile',
-          template: data
-        });
-      });
-    }
-})
 
-// .controller('editProfileCtrl', [
-//   '$scope',
-//   '$rootScope',
-//   '$editProfileService',
-//   function($rootScope, $scope, $editProfileService) {
-//   $scope.data = {}
-//   $scope.editProfile = function(){
-//     profileService.editProfile($scope.data.firstname, $scope.data.lastname,
-//      $scope.data.email, $scope.data.interests).success(function(data){ 
-//       console.log(data);
-//     }).error(function(data) {
-//       console.log("Unable to update settings on server." + data);
-//     });
-//   }}
-//   ])
-
+      // .error(function(data) {
+      //   var alertPopup = $ionicPopup.alert({
+      //     title: 'Unable to edit profile',
+      //     template: data
+      //   });
+      // })
+}  
+  console.log(tempinterests)
+}
+])
 
    
 .controller('eventFeedCtrl', [

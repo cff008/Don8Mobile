@@ -28,8 +28,8 @@
             </p>
         </div>
         <ion-list>
-        <ion-item collection-repeat= "interest in interestslist" >
-            {{interestslist}}
+        <ion-item ng-repeat= "interest in data.interests" >
+            {{interest}}
         </ion-item>
         </ion-list>
         
@@ -44,13 +44,11 @@
             </p>
         </div>
         <ion-list>
-        <ion-item collection-repeat="organization in organizationslist">
-            {{organizationslist}}
+        <ion-item collection-repeat="organization in data.organizations">
+            {{organization}}
         </ion-item>
         </ion-list>
-        <b>{{interestslist[0]}}</b>
-        <b>{{interestslist[1]}}</b>
-        <b>{{interestslist[2]}}</b>
+
         <div class="spacer" style="width: 300px; height: 8px;"></div>
         <div class="spacer" style="width: 300px; height: 11px;"></div>
     </ion-content>
